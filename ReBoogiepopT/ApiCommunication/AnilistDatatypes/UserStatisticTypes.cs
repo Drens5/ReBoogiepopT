@@ -13,5 +13,8 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     [JsonObject(MemberSerialization.Fields)]
     public class UserStatisticTypes
     {
+        private readonly UserStatistics anime;
+
+        public UserStatistics Anime => anime;
     }
 }

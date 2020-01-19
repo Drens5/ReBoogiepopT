@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReBoogiepopT", "ReBoogiepopT\ReBoogiepopT.csproj", "{93A54621-998C-4883-91C3-CFE05DE17BEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReBoogiepopTTests", "ReBoogiepopTTests\ReBoogiepopTTests.csproj", "{2E9D771D-9F81-4FB8-897A-FD88FBA7384B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{93A54621-998C-4883-91C3-CFE05DE17BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93A54621-998C-4883-91C3-CFE05DE17BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93A54621-998C-4883-91C3-CFE05DE17BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E9D771D-9F81-4FB8-897A-FD88FBA7384B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E9D771D-9F81-4FB8-897A-FD88FBA7384B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E9D771D-9F81-4FB8-897A-FD88FBA7384B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E9D771D-9F81-4FB8-897A-FD88FBA7384B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -58,7 +58,10 @@
     <Compile Include="ApiCommunication\AnilistDatatypes\PageInfo.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\User.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\TopLevel.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\UserGenreStatistic.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\UserStatistics.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\UserStatisticTypes.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\UserTagStatistic.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

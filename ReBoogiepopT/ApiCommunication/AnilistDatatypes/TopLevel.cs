@@ -17,7 +17,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     [JsonObject(MemberSerialization.Fields)]
     public class TopLevel
     {
-        readonly private Data data;
+        private readonly Data data;
         // Explicit field used since "data" is the field in the Json.
 
         public Data Data => data;
@@ -30,6 +30,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     /// <remarks>All the fields on this level start with a capital letter, so no attribute necessary.</remarks>
     public class Data
     {
-        public User User { get; }
+        public User User { get; set; }
+        // The set is necessary for this field to be parsed when deserializing Json, reason unknown.
     }
 }
