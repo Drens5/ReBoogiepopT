@@ -502,10 +502,8 @@ namespace ReBoogiepopTTests
             }
             ";
 
-            string userJsonResponseNeat = userJsonResponse.Replace("\r\n", "").Replace(" ", "");
-
             // Act
-            TopLevel userResponse = JsonConvert.DeserializeObject<TopLevel>(userJsonResponseNeat);
+            TopLevel userResponse = JsonConvert.DeserializeObject<TopLevel>(userJsonResponse);
 
             // Assert, only on types with relevant equality.
             int expectedId = 137485;

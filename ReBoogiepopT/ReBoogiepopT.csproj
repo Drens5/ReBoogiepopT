@@ -50,18 +50,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiCommunication\AnilistDatatypes\Favourites.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\ListActivity.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\Media.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaConnection.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaCoverImage.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaTag.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaTitle.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\Page.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\PageInfo.cs" />
+    <Compile Include="ApiCommunication\OperationObjects\Service.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\User.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\TopLevel.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\UserGenreStatistic.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\UserStatistics.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\UserStatisticTypes.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\UserTagStatistic.cs" />
+    <Compile Include="ApiCommunication\Operation.cs" />
+    <Compile Include="ApiCommunication\OperationObjects\Variables\Definitions.cs" />
+    <Compile Include="ApiCommunication\OperationQueries.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,5 +99,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
