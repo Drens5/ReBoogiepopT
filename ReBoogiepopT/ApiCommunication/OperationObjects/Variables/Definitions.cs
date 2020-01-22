@@ -28,7 +28,7 @@ namespace ReBoogiepopT.ApiCommunication.OperationObjects.Variables
 
 
     /// <summary>
-    /// Class defines a possible varialbe field for a GraphQL operation request in which the userId and chunk variables are provided.
+    /// Class defines a possible variable field for a GraphQL operation request in which the userId and chunk variables are provided.
     /// </summary>
     [JsonObject(MemberSerialization.Fields)]
     public class UserIdAndChunk
