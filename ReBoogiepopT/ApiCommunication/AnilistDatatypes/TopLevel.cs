@@ -34,5 +34,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         // The set is necessary for this field to be parsed when deserializing Json, reason unknown.
 
         public Page Page { get; set; }
+
+        public MediaListCollection MediaListCollection { get; set; }
     }
 }

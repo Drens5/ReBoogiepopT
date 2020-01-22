@@ -13,8 +13,10 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     [JsonObject(MemberSerialization.Fields)]
     public class MediaCoverImage
     {
+        private readonly string large;
         private readonly string medium;
 
+        public string Large => large;
         public string Medium => medium;
     }
 }

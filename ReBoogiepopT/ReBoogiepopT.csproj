@@ -54,6 +54,9 @@
     <Compile Include="ApiCommunication\AnilistDatatypes\Media.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaConnection.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaCoverImage.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\MediaList.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\MediaListCollection.cs" />
+    <Compile Include="ApiCommunication\AnilistDatatypes\MediaListGroup.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaTag.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\MediaTitle.cs" />
     <Compile Include="ApiCommunication\AnilistDatatypes\Page.cs" />

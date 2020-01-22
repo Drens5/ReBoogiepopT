@@ -25,4 +25,21 @@ namespace ReBoogiepopT.ApiCommunication.OperationObjects.Variables
             this.mediaId = mediaId;
         }
     }
+
+
+    /// <summary>
+    /// Class defines a possible varialbe field for a GraphQL operation request in which the userId and chunk variables are provided.
+    /// </summary>
+    [JsonObject(MemberSerialization.Fields)]
+    public class UserIdAndChunk
+    {
+        private readonly int userId;
+        private readonly int chunk;
+
+        public UserIdAndChunk(int userId, int chunk)
+        {
+            this.userId = userId;
+            this.chunk = chunk;
+        }
+    }
 }

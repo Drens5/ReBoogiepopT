@@ -31,5 +31,66 @@ namespace ReBoogiepopT.ApiCommunication
               }
             }
         ";
+
+        static private readonly string pageListActivityInfo = @"
+            query pageListActivityInfo($page: Int!, $mediaId: Int!) {
+              Page(perPage: 50, page: $page) {
+                pageInfo {
+                  currentPage
+                  lastPage
+                }
+    
+                activities(mediaId: $mediaId, type: ANIME_LIST){
+                  ... on ListActivity {
+                    user {
+                      id
+                      name
+                    }
+                    status
+                  }
+                }
+              }
+            }
+        ";
+
+        static private readonly string userMediaList = @"
+            query userMediaList($userId: Int!, $chunk: Int!) {
+              MediaListCollection(userId: $userId, type: ANIME,
+                perChunk: 500, chunk: $chunk,
+                  status_in: [CURRENT, COMPLETED, PAUSED, DROPPED, REPEATING]) {
+                user {
+                  id
+                }
+                hasNextChunk
+                lists {
+                  status
+                  entries {
+                    status
+                    media {
+                      id
+                      title {
+                        english
+                        romaji
+                        native
+                      }
+                      description
+                      coverImage {
+                        large
+                        medium
+                      }
+                      meanScore
+                      popularity
+                      genres
+                      tags {
+                        id
+                        name
+                        rank
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        ";
     }
 }
