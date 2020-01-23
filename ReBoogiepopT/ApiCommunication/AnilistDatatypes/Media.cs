@@ -18,8 +18,13 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         private readonly string description;
         private readonly MediaCoverImage coverImage;
         private readonly List<string> genres;
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         private readonly int meanScore;
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         private readonly int popularity;
+
         private readonly List<MediaTag> tags;
 
         public int Id => id;

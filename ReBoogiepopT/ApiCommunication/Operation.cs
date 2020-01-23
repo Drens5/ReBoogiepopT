@@ -116,6 +116,23 @@ namespace ReBoogiepopT.ApiCommunication
 
 
         /// <summary>
+        /// Fetches a user's favourites and statistics
+        /// </summary>
+        /// <param name="name">Name to find the user by.</param>
+        /// <returns>User information.</returns>
+        static async public Task<User> UserFavoritesStatistics(string name)
+        {
+            Name variables = new Name(name);
+            Service service = new Service(userFavoritesStatistics, variables);
+            string serializedService = JsonConvert.SerializeObject(service);
+            StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody);
+            return responseObject.Data.User;
+        }
+
+
+        /// <summary>
         /// Fetches the list of all the non plan to watch media on a user's list tagged with their status.
         /// </summary>
         /// <remarks>Edit the query to fetch plan to watch media as well.</remarks>

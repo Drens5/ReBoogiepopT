@@ -89,6 +89,7 @@
     <Compile Include="Recommendation\ActivityInject.cs" />
     <Compile Include="Recommendation\Aggregation.cs" />
     <Compile Include="Recommendation\CountMedia.cs" />
+    <Compile Include="Recommendation\CoupledTag.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

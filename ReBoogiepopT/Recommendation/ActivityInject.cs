@@ -29,11 +29,40 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         private readonly ListActivityStatusSelection listActivityStatusSelection;
 
-        public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection lass)
+        /// <summary>
+        /// The user to which the recommendation may be tailored.
+        /// </summary>
+        /// <remarks>May reasonably be null, account for in usage!</remarks>
+        private readonly User pAuth;
+
+        /// <summary>
+        /// A list of coupled tags to filter the media with.
+        /// </summary>
+        private readonly List<CoupledTag> cTags;
+
+        public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection listActivityStatusSelection)
         {
             this.injectMedia = injectMedia;
             this.injectAmount = injectAmount;
-            listActivityStatusSelection = lass;
+            this.listActivityStatusSelection = listActivityStatusSelection;
+        }
+
+        public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection listActivityStatusSelection, User user)
+            : this(injectMedia, injectAmount, listActivityStatusSelection)
+        {
+            pAuth = user;
+        }
+
+        public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection listActivityStatusSelection, List<CoupledTag> cTags)
+            : this(injectMedia, injectAmount, listActivityStatusSelection)
+        {
+            this.cTags = cTags;
+        }
+
+        public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection listActivityStatusSelection, User user,
+            List<CoupledTag> cTags) : this(injectMedia, injectAmount, listActivityStatusSelection, user)
+        {
+            this.cTags = cTags;
         }
 
         /// <summary>
@@ -41,16 +70,12 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         public enum ListActivityStatusSelection { All, CompletedOnly, NotPlanning }
 
-        /// <summary>
-        /// All the media that appeared with the amount of occurences. Represents local popularity.
-        /// </summary>
-        private List<CountMedia> mediaInQuestion;
 
         /// <summary>
         /// Run the activity inject recommendation method with the settings in this instance.
         /// </summary>
-        /// <returns>Void, but writes result to mediaInQuestion field.</returns>
-        public async Task RunActivityInject()
+        /// <returns>All the media that appeared with the amount of occurences.</returns>
+        public async Task<List<CountMedia>> RunActivityInject()
         {
             List<int> selectedUsers = new List<int>(injectMedia.Count * injectAmount);
             List<MediaList> entriesToAggregate = new List<MediaList>(selectedUsers.Count * 400);
@@ -68,7 +93,21 @@ namespace ReBoogiepopT.Recommendation
             // ---
 
             // Minimal aggregation
-            mediaInQuestion = Aggregation.NubC(entriesToAggregate);
+            List<CountMedia> mediaInQuestion = Aggregation.NubC(entriesToAggregate);
+
+            if (pAuth != null)
+            {
+                List<MediaList> pAuthEntries = await Operation.UserMediaListDownToMediaList(pAuth.Id);
+
+                // Remove media known to the pAuthUser
+                mediaInQuestion = Aggregation.NubUR(mediaInQuestion, pAuthEntries);
+            }
+            
+            if (cTags != null)
+                // Filter to media that satisfies the coupled tags.
+                mediaInQuestion = Aggregation.NubT(mediaInQuestion, cTags);
+
+            return mediaInQuestion;
         }
 
         /// <summary>

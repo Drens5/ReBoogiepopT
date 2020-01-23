@@ -15,10 +15,10 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     [JsonObject(MemberSerialization.Fields)]
     public class MediaListGroup
     {
-        private readonly MediaListStatus status;
+        private readonly MediaListStatus? status;
         private readonly List<MediaList> entries;
 
-        public MediaListStatus Status => status;
+        public MediaListStatus? Status => status;
         public List<MediaList> Entries => entries;
     }
 }

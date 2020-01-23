@@ -92,5 +92,51 @@ namespace ReBoogiepopT.ApiCommunication
               }
             }
         ";
+
+        static private readonly string userFavoritesStatistics = @"
+            query userFavoritesStatistics($name: String!) {
+              User(name: $name) {
+                id
+                name
+                siteUrl
+                favourites {
+                  anime {
+                    nodes {
+                      id
+                      title {
+                        english
+                        native
+                        romaji
+                      }
+                      meanScore
+                      popularity
+                      genres
+                    }
+                  }
+                }
+                statistics {
+                  anime {
+                    count
+                    minutesWatched
+                    genres {
+                      count
+                      minutesWatched
+                      genre
+                    }
+                    tags {
+                      count
+                      minutesWatched
+                      tag {
+                        id
+                        name
+                        description
+                        category
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        ";
     }
 }

@@ -17,7 +17,7 @@ namespace ReBoogiepopT.Recommendation
         static public List<CountMedia> NubC(List<MediaList> entries)
         {
             List<CountMedia> nubC = new List<CountMedia>(500);
-            // My whole anime fits in here with space to spare, fine for initial and will likely grow.
+            // My whole anime list fits in here with space to spare, fine for initial and will likely grow.
 
             foreach (MediaList entry in entries)
             {
@@ -31,6 +31,56 @@ namespace ReBoogiepopT.Recommendation
                     countMedia.Count++;
             }
             return nubC;
+        }
+
+        /// <summary>
+        /// Comparison delegate to sort on local popularity.
+        /// </summary>
+        /// <remarks>That is the popularity based on selected users.</remarks>
+        static public Comparison<CountMedia> LocalPopularity = (x, y) => x.Count - y.Count;
+
+        /// <summary>
+        /// Comparison delegate to sort on global popularity.
+        /// </summary>
+        static public Comparison<CountMedia> GlobalPopularity = (x, y) => x.Media.Popularity - y.Media.Popularity;
+
+        /// <summary>
+        /// Comparison delegate to sort on global mean score.
+        /// </summary>
+        static public Comparison<CountMedia> MeanScore = (x, y) => x.Media.MeanScore - y.Media.MeanScore;
+
+
+
+        /// <summary>
+        /// Filters out media that the user has already seen.
+        /// </summary>
+        /// <param name="countMediaList">List of media to filter.</param>
+        /// <param name="userList">List of media to filter by.</param>
+        /// <returns>List of CountMedia with media from userList removed.</returns>
+        static public List<CountMedia> NubUR(List<CountMedia> countMediaList, List<MediaList> userList)
+        {
+            // Predicate whether a CountMedia (cm) is not on the user's list.
+            Func<CountMedia, bool> userHasNotSeen = cm => !userList.Exists(ulm => cm.Media.Id == ulm.Media.Id);
+            return countMediaList.Where<CountMedia>(userHasNotSeen).ToList();
+        }
+
+        /// <summary>
+        /// Filters down to media that satisfies the coupled tags.
+        /// </summary>
+        /// <param name="countMedias">List of media to be filtered.</param>
+        /// <param name="coupledTags">Coupled tags to filter by.</param>
+        /// <returns>List of CountMedia only with media satisfying the coupled tags.</returns>
+        static public List<CountMedia> NubT(List<CountMedia> countMedias, List<CoupledTag> coupledTags)
+        {
+            return countMedias.Where<CountMedia>(cm =>
+            {
+                foreach (CoupledTag coupledTag in coupledTags)
+                {
+                    if (!coupledTag.Satisfies(cm.Media))
+                        return false;
+                }
+                return true;
+            }).ToList();
         }
     }
 }

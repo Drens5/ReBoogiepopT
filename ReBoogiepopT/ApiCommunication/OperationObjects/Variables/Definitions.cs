@@ -42,4 +42,19 @@ namespace ReBoogiepopT.ApiCommunication.OperationObjects.Variables
             this.chunk = chunk;
         }
     }
+
+
+    /// <summary>
+    /// Class defines a possible variable field for a GraphQL operation request in which name of type string is provided.
+    /// </summary>
+    [JsonObject(MemberSerialization.Fields)]
+    public class Name
+    {
+        private readonly string name;
+
+        public Name(string name)
+        {
+            this.name = name;
+        }
+    }
 }
