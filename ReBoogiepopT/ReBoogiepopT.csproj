@@ -78,11 +78,11 @@
     <Compile Include="ApiCommunication\Operation.cs" />
     <Compile Include="ApiCommunication\OperationObjects\Variables\Definitions.cs" />
     <Compile Include="ApiCommunication\OperationQueries.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="ReBoogiepopTMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ReBoogiepopTMainForm.Designer.cs">
+      <DependentUpon>ReBoogiepopTMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +90,9 @@
     <Compile Include="Recommendation\Aggregation.cs" />
     <Compile Include="Recommendation\CountMedia.cs" />
     <Compile Include="Recommendation\CoupledTag.cs" />
+    <EmbeddedResource Include="ReBoogiepopTMainForm.resx">
+      <DependentUpon>ReBoogiepopTMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

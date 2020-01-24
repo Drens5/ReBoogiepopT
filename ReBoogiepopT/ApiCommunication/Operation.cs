@@ -37,7 +37,7 @@ namespace ReBoogiepopT.ApiCommunication
         /// <param name="requestBody">Json body to be sent with the request.</param>
         /// <returns>The response of the request made.</returns>
         /// <remarks>May throw an HttpRequestException.</remarks>
-        static async private Task<HttpResponseMessage> SafeRequest(StringContent requestBody)
+        static async private Task<HttpResponseMessage> SafeRequest(StringContent requestBody, StringContent requestBodyForRetry)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace ReBoogiepopT.ApiCommunication
                     Thread.Sleep(waitTimeInMilliseconds);
 
                     // Retry request after waiting.
-                    response = await client.PostAsync(client.BaseAddress, requestBody);
+                    response = await client.PostAsync(client.BaseAddress, requestBodyForRetry);
                 }
                 response.EnsureSuccessStatusCode();
 
@@ -71,9 +71,9 @@ namespace ReBoogiepopT.ApiCommunication
         /// </summary>
         /// <param name="requestBody">Request body to send as Json.</param>
         /// <returns>Response as a TopLevel object.</returns>
-        static async private Task<TopLevel> SafeRequestAndDeserializeResponse(StringContent requestBody)
+        static async private Task<TopLevel> SafeRequestAndDeserializeResponse(StringContent requestBody, StringContent requestBodyForRetry)
         {
-            HttpResponseMessage response = await SafeRequest(requestBody);
+            HttpResponseMessage response = await SafeRequest(requestBody, requestBodyForRetry);
             string responseBody = await response.Content.ReadAsStringAsync();
             TopLevel responseObject = JsonConvert.DeserializeObject<TopLevel>(responseBody, new Newtonsoft.Json.Converters.StringEnumConverter());
             return responseObject;
@@ -91,8 +91,10 @@ namespace ReBoogiepopT.ApiCommunication
             Service service = new Service(pageListActivityInfoLastPageQuery, variables);
             string serializedService = JsonConvert.SerializeObject(service);
             StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
 
-            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody);
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
             return responseObject.Data.Page.PageInfo.LastPage;
         }
 
@@ -109,8 +111,10 @@ namespace ReBoogiepopT.ApiCommunication
             Service service = new Service(pageListActivityInfo, variables);
             string serializedService = JsonConvert.SerializeObject(service);
             StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
 
-            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody);
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
             return responseObject.Data.Page;
         }
 
@@ -126,8 +130,10 @@ namespace ReBoogiepopT.ApiCommunication
             Service service = new Service(userFavoritesStatistics, variables);
             string serializedService = JsonConvert.SerializeObject(service);
             StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
 
-            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody);
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
             return responseObject.Data.User;
         }
 
@@ -153,8 +159,9 @@ namespace ReBoogiepopT.ApiCommunication
                 Service service = new Service(userMediaList, variables);
                 string serializedService = JsonConvert.SerializeObject(service);
                 StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+                StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
 
-                TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody);
+                TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
 
                 foreach (MediaListGroup list in responseObject.Data.MediaListCollection.Lists)
                 {
