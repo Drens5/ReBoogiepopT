@@ -38,6 +38,7 @@ namespace ReBoogiepopT.Recommendation
         /// <summary>
         /// A list of coupled tags to filter the media with.
         /// </summary>
+        /// <remarks>May reasonably be null.</remarks>
         private readonly List<CoupledTag> cTags;
 
         public ActivityInject(List<int> injectMedia, int injectAmount, ListActivityStatusSelection listActivityStatusSelection)

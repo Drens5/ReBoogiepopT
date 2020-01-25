@@ -123,7 +123,7 @@ namespace ReBoogiepopT.ApiCommunication
         /// Fetches a user's favourites and statistics
         /// </summary>
         /// <param name="name">Name to find the user by.</param>
-        /// <returns>User information.</returns>
+        /// <returns>User information or null on HttpRequestException.</returns>
         static async public Task<User> UserFavoritesStatistics(string name)
         {
             Name variables = new Name(name);
@@ -131,10 +131,15 @@ namespace ReBoogiepopT.ApiCommunication
             string serializedService = JsonConvert.SerializeObject(service);
             StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
             StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
-
-            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
-
-            return responseObject.Data.User;
+            try
+            {
+                TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+                return responseObject.Data.User;
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
         }
 
 

@@ -34,20 +34,20 @@ namespace ReBoogiepopT.Recommendation
         }
 
         /// <summary>
-        /// Comparison delegate to sort on local popularity.
+        /// Comparison delegate to sort descending on local popularity.
         /// </summary>
         /// <remarks>That is the popularity based on selected users.</remarks>
-        static public Comparison<CountMedia> LocalPopularity = (x, y) => x.Count - y.Count;
+        static public Comparison<CountMedia> LocalPopularity = (x, y) => y.Count - x.Count;
 
         /// <summary>
-        /// Comparison delegate to sort on global popularity.
+        /// Comparison delegate to sort descending on global popularity.
         /// </summary>
-        static public Comparison<CountMedia> GlobalPopularity = (x, y) => x.Media.Popularity - y.Media.Popularity;
+        static public Comparison<CountMedia> GlobalPopularity = (x, y) => y.Media.Popularity - x.Media.Popularity;
 
         /// <summary>
-        /// Comparison delegate to sort on global mean score.
+        /// Comparison delegate to sort descending on global mean score.
         /// </summary>
-        static public Comparison<CountMedia> MeanScore = (x, y) => x.Media.MeanScore - y.Media.MeanScore;
+        static public Comparison<CountMedia> MeanScore = (x, y) => y.Media.MeanScore - x.Media.MeanScore;
 
 
 

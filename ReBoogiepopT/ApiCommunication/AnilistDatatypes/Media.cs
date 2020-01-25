@@ -16,6 +16,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         private readonly int id;
         private readonly MediaTitle title;
         private readonly string description;
+        private readonly string siteUrl;
         private readonly MediaCoverImage coverImage;
         private readonly List<string> genres;
 
@@ -30,6 +31,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         public int Id => id;
         public MediaTitle Title => title;
         public string Description => description;
+        public string SiteUrl => siteUrl;
         public MediaCoverImage CoverImage => coverImage;
         public List<string> Genres => genres;
         public int MeanScore => meanScore;

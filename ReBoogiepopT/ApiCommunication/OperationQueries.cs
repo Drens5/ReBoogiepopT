@@ -74,6 +74,7 @@ namespace ReBoogiepopT.ApiCommunication
                         native
                       }
                       description
+                      siteUrl
                       coverImage {
                         large
                         medium
