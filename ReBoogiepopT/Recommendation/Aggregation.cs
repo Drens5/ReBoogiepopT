@@ -82,5 +82,15 @@ namespace ReBoogiepopT.Recommendation
                 return true;
             }).ToList();
         }
+
+        /// <summary>
+        /// Filters a list of selected media from its inject media.
+        /// </summary>
+        /// <param name="countMedias"></param>
+        /// <returns>List of selected with inject media removed.</returns>
+        static public List<CountMedia> NubF(List<CountMedia> countMedias)
+        {
+            throw new NotImplementedException("You know the dill.");
+        }
     }
 }

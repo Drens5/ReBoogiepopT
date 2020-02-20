@@ -139,5 +139,21 @@ namespace ReBoogiepopT.ApiCommunication
               }
             }
         ";
+
+        private const string genreCollection = @"
+            query genreCollection {
+              GenreCollection
+            }
+        ";
+
+        private const string tagCollection = @"
+            query tagCollection {
+              MediaTagCollection {
+                id
+                name
+                category
+              }
+            }
+        ";
     }
 }

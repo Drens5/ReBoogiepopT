@@ -11,6 +11,15 @@ using System.Threading.Tasks;
 namespace ReBoogiepopT.ApiCommunication.OperationObjects.Variables
 {
     /// <summary>
+    /// Empty class to pass into a service to make a GraphQL operation request without variables.
+    /// </summary>
+    [JsonObject()]
+    public class Empty
+    {
+
+    }
+
+    /// <summary>
     /// Class defines a possible variable field for a GraphQL operation request in which the page and mediaId variable is provided.
     /// </summary>
     [JsonObject(MemberSerialization.Fields)]

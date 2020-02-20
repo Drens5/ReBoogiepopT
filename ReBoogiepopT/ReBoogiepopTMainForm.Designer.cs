@@ -34,6 +34,7 @@
             this.MethodChoiceNextButton = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.ActivityInjectPanel = new System.Windows.Forms.Panel();
+            this.ActivityInjectPanelBackToMethodSelectionButton = new System.Windows.Forms.Button();
             this.CoupledTagsTextBox = new System.Windows.Forms.TextBox();
             this.SelectionFilteringCoupledTagsLabel = new System.Windows.Forms.Label();
             this.SelectionPerMediaNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -49,6 +50,10 @@
             this.ActivityInjectRunButton = new System.Windows.Forms.Button();
             this.ActivityInjectTopText = new System.Windows.Forms.Label();
             this.ResultsPanel = new System.Windows.Forms.Panel();
+            this.NoResultsLabel = new System.Windows.Forms.Label();
+            this.ToMainPanelButton = new System.Windows.Forms.Button();
+            this.LocalPopularitySortedAmountOutOf = new System.Windows.Forms.Label();
+            this.MeanScoreSortedAmountOutOf = new System.Windows.Forms.Label();
             this.LocalPopularitySortedNextButton = new System.Windows.Forms.Button();
             this.LocalPopularitySortedPreviousButton = new System.Windows.Forms.Button();
             this.MeanScoreSortedNextButton = new System.Windows.Forms.Button();
@@ -62,11 +67,6 @@
             this.MeanScoreLabel = new System.Windows.Forms.Label();
             this.ResultsPanelTopLabel = new System.Windows.Forms.Label();
             this.MeanScorePictureBox = new System.Windows.Forms.PictureBox();
-            this.MeanScoreSortedAmountOutOf = new System.Windows.Forms.Label();
-            this.LocalPopularitySortedAmountOutOf = new System.Windows.Forms.Label();
-            this.ToMainPanelButton = new System.Windows.Forms.Button();
-            this.ActivityInjectPanelBackToMethodSelectionButton = new System.Windows.Forms.Button();
-            this.NoResultsLabel = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
             this.ActivityInjectPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SelectionPerMediaNumericUpDown)).BeginInit();
@@ -139,6 +139,16 @@
             this.ActivityInjectPanel.Size = new System.Drawing.Size(512, 374);
             this.ActivityInjectPanel.TabIndex = 3;
             this.ActivityInjectPanel.Visible = false;
+            // 
+            // ActivityInjectPanelBackToMethodSelectionButton
+            // 
+            this.ActivityInjectPanelBackToMethodSelectionButton.Location = new System.Drawing.Point(3, 348);
+            this.ActivityInjectPanelBackToMethodSelectionButton.Name = "ActivityInjectPanelBackToMethodSelectionButton";
+            this.ActivityInjectPanelBackToMethodSelectionButton.Size = new System.Drawing.Size(142, 23);
+            this.ActivityInjectPanelBackToMethodSelectionButton.TabIndex = 16;
+            this.ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
+            this.ActivityInjectPanelBackToMethodSelectionButton.UseVisualStyleBackColor = true;
+            this.ActivityInjectPanelBackToMethodSelectionButton.Click += new System.EventHandler(this.ActivityInjectPanelBackToMethodSelectionButton_Click);
             // 
             // CoupledTagsTextBox
             // 
@@ -309,6 +319,45 @@
             this.ResultsPanel.TabIndex = 4;
             this.ResultsPanel.Visible = false;
             // 
+            // NoResultsLabel
+            // 
+            this.NoResultsLabel.AutoSize = true;
+            this.NoResultsLabel.Enabled = false;
+            this.NoResultsLabel.Location = new System.Drawing.Point(52, 50);
+            this.NoResultsLabel.Name = "NoResultsLabel";
+            this.NoResultsLabel.Size = new System.Drawing.Size(269, 13);
+            this.NoResultsLabel.TabIndex = 16;
+            this.NoResultsLabel.Text = "No results for the settings provided, try a different query.";
+            this.NoResultsLabel.Visible = false;
+            // 
+            // ToMainPanelButton
+            // 
+            this.ToMainPanelButton.Location = new System.Drawing.Point(375, 19);
+            this.ToMainPanelButton.Name = "ToMainPanelButton";
+            this.ToMainPanelButton.Size = new System.Drawing.Size(134, 23);
+            this.ToMainPanelButton.TabIndex = 15;
+            this.ToMainPanelButton.Text = "Quit to Method Selection";
+            this.ToMainPanelButton.UseVisualStyleBackColor = true;
+            this.ToMainPanelButton.Click += new System.EventHandler(this.ToMainPanelButton_Click);
+            // 
+            // LocalPopularitySortedAmountOutOf
+            // 
+            this.LocalPopularitySortedAmountOutOf.AutoSize = true;
+            this.LocalPopularitySortedAmountOutOf.Location = new System.Drawing.Point(303, 102);
+            this.LocalPopularitySortedAmountOutOf.Name = "LocalPopularitySortedAmountOutOf";
+            this.LocalPopularitySortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
+            this.LocalPopularitySortedAmountOutOf.TabIndex = 14;
+            this.LocalPopularitySortedAmountOutOf.Text = "A/AO";
+            // 
+            // MeanScoreSortedAmountOutOf
+            // 
+            this.MeanScoreSortedAmountOutOf.AutoSize = true;
+            this.MeanScoreSortedAmountOutOf.Location = new System.Drawing.Point(66, 102);
+            this.MeanScoreSortedAmountOutOf.Name = "MeanScoreSortedAmountOutOf";
+            this.MeanScoreSortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
+            this.MeanScoreSortedAmountOutOf.TabIndex = 13;
+            this.MeanScoreSortedAmountOutOf.Text = "A/AO";
+            // 
             // LocalPopularitySortedNextButton
             // 
             this.LocalPopularitySortedNextButton.Enabled = false;
@@ -439,55 +488,6 @@
             this.MeanScorePictureBox.Size = new System.Drawing.Size(127, 138);
             this.MeanScorePictureBox.TabIndex = 0;
             this.MeanScorePictureBox.TabStop = false;
-            // 
-            // MeanScoreSortedAmountOutOf
-            // 
-            this.MeanScoreSortedAmountOutOf.AutoSize = true;
-            this.MeanScoreSortedAmountOutOf.Location = new System.Drawing.Point(66, 102);
-            this.MeanScoreSortedAmountOutOf.Name = "MeanScoreSortedAmountOutOf";
-            this.MeanScoreSortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
-            this.MeanScoreSortedAmountOutOf.TabIndex = 13;
-            this.MeanScoreSortedAmountOutOf.Text = "A/AO";
-            // 
-            // LocalPopularitySortedAmountOutOf
-            // 
-            this.LocalPopularitySortedAmountOutOf.AutoSize = true;
-            this.LocalPopularitySortedAmountOutOf.Location = new System.Drawing.Point(303, 102);
-            this.LocalPopularitySortedAmountOutOf.Name = "LocalPopularitySortedAmountOutOf";
-            this.LocalPopularitySortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
-            this.LocalPopularitySortedAmountOutOf.TabIndex = 14;
-            this.LocalPopularitySortedAmountOutOf.Text = "A/AO";
-            // 
-            // ToMainPanelButton
-            // 
-            this.ToMainPanelButton.Location = new System.Drawing.Point(375, 19);
-            this.ToMainPanelButton.Name = "ToMainPanelButton";
-            this.ToMainPanelButton.Size = new System.Drawing.Size(134, 23);
-            this.ToMainPanelButton.TabIndex = 15;
-            this.ToMainPanelButton.Text = "Quit to Method Selection";
-            this.ToMainPanelButton.UseVisualStyleBackColor = true;
-            this.ToMainPanelButton.Click += new System.EventHandler(this.ToMainPanelButton_Click);
-            // 
-            // ActivityInjectPanelBackToMethodSelectionButton
-            // 
-            this.ActivityInjectPanelBackToMethodSelectionButton.Location = new System.Drawing.Point(3, 348);
-            this.ActivityInjectPanelBackToMethodSelectionButton.Name = "ActivityInjectPanelBackToMethodSelectionButton";
-            this.ActivityInjectPanelBackToMethodSelectionButton.Size = new System.Drawing.Size(142, 23);
-            this.ActivityInjectPanelBackToMethodSelectionButton.TabIndex = 16;
-            this.ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
-            this.ActivityInjectPanelBackToMethodSelectionButton.UseVisualStyleBackColor = true;
-            this.ActivityInjectPanelBackToMethodSelectionButton.Click += new System.EventHandler(this.ActivityInjectPanelBackToMethodSelectionButton_Click);
-            // 
-            // NoResultsLabel
-            // 
-            this.NoResultsLabel.AutoSize = true;
-            this.NoResultsLabel.Enabled = false;
-            this.NoResultsLabel.Location = new System.Drawing.Point(52, 50);
-            this.NoResultsLabel.Name = "NoResultsLabel";
-            this.NoResultsLabel.Size = new System.Drawing.Size(269, 13);
-            this.NoResultsLabel.TabIndex = 16;
-            this.NoResultsLabel.Text = "No results for the settings provided, try a different query.";
-            this.NoResultsLabel.Visible = false;
             // 
             // ReBoogiepopTMainForm
             // 
