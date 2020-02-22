@@ -119,9 +119,13 @@
     <Compile Include="Recommendation\Aggregation.cs" />
     <Compile Include="Recommendation\CountMedia.cs" />
     <Compile Include="Recommendation\CoupledTag.cs" />
-    <Compile Include="Recommendation\MetricLift\GenreAndTagMetricTopology.cs" />
-    <Compile Include="Recommendation\MetricLift\GenreStatInfo.cs" />
-    <Compile Include="Recommendation\MetricLift\TagStatInfo.cs" />
+    <Compile Include="Recommendation\Exceptions\InvalidGenreOrTagException.cs" />
+    <Compile Include="Recommendation\GenreAndTagStatInfo.cs" />
+    <Compile Include="Recommendation\Metric.cs" />
+    <Compile Include="Recommendation\GenreStatInfo.cs" />
+    <Compile Include="Recommendation\MetricLift.cs" />
+    <Compile Include="Recommendation\TagStatInfo.cs" />
+    <Compile Include="Recommendation\VectorLift.cs" />
     <EmbeddedResource Include="ReBoogiepopTMainForm.resx">
       <DependentUpon>ReBoogiepopTMainForm.cs</DependentUpon>
     </EmbeddedResource>

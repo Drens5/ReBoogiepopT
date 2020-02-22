@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReBoogiepopT.Recommendation.MetricLift
+namespace ReBoogiepopT.Recommendation
 {
     /// <summary>
     /// Class that defines a tag with additional information.

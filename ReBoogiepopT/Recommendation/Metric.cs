@@ -1,65 +1,116 @@
 ﻿using ReBoogiepopT.ApiCommunication;
 using ReBoogiepopT.ApiCommunication.AnilistDatatypes;
-using ReBoogiepopT.Recommendation.MetricLift;
+using ReBoogiepopT.Recommendation;
+using ReBoogiepopT.Recommendation.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReBoogiepopT.Recommendation.MetricLift
+namespace ReBoogiepopT.Recommendation
 {
     /// <summary>
-    /// Class defines metric topologies of tags and genres and between them.
-    /// The topology defined is based on the user.
+    /// Recommendation method which defines a metric on the set of all anime, turning this set into a metric space.
+    /// Recommandation can e.g. be done by selecting anime in a neighborhood from a particular one and sorting by distance.
     /// </summary>
-    public class GenreAndTagMetricTopology
+    public class Metric
     {
-        private List<TagStatInfo> tagsStatInfo;
-        private List<GenreStatInfo> genresStatInfo;
+        private GenreAndTagStatInfo genreAndTagStatInfo;
 
         private readonly string pAuthUserName;
 
         private const int constNonRelevancy = 2;
         private const int constRelevancy = 1;
 
-        /// <summary>
-        /// Flag for members to check on invocation.
-        /// Throw exception if a member tries to do something without the class being initialized.
-        /// </summary>
-        private bool initialized = false;
-
-        public GenreAndTagMetricTopology(string userName)
+        public Metric(GenreAndTagStatInfo genreAndTagStatInfo)
         {
-            pAuthUserName = userName;
+            if (genreAndTagStatInfo == null)
+                throw new ArgumentNullException(nameof(genreAndTagStatInfo));
+            if (!genreAndTagStatInfo.Initialized)
+                throw new Exception("Instance not explicitly initialized.");
+
+            this.genreAndTagStatInfo = genreAndTagStatInfo;
         }
 
         /// <summary>
-        /// Does all asynchronous operations, querying the anilist api, and sets up the relevant data to define the metric.
-        /// Must be run before any other operation.
+        /// Metric function based on minutes watched for genres or tags.
+        /// Determines what each parameter is, either a genre or tag, and applies the correct metric function.
         /// </summary>
-        /// <returns>Task, async void</returns>
-        public async Task Initialize()
+        /// <param name="got1">Genre or Tag 1</param>
+        /// <param name="got2">Genre or Tag 2</param>
+        /// <remarks>May throw an InvalidGenreOrTagException.</remarks>
+        /// <returns>The distance between got1 and got2 (in terms of minutes watched).</returns>
+        public int MinutesWatchedMetric(string got1, string got2)
         {
-            List<string> genreCollection = await Operation.GenreCollection();
-            List<MediaTag> tagCollection = await Operation.TagCollection();
-
-            User pAuth = await Operation.UserFavoritesStatistics(pAuthUserName);
-
-            genresStatInfo = genreCollection.Select(name =>
+            GenreStatInfo gsi1 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got1);
+            if (gsi1 != null)
             {
-                UserGenreStatistic cgs = pAuth.Statistics.Anime.Genres.Find(gs => gs.Genre == name);
-                return cgs == null ? new GenreStatInfo(name) : new GenreStatInfo(name, cgs.Count, cgs.MinutesWatched);
-            }).ToList();
+                GenreStatInfo gsi2 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got2);
+                if (gsi2 != null)
+                    return MinutesWatchedMetric(gsi1, gsi2);
 
-            tagsStatInfo = tagCollection.Select(tag =>
+                TagStatInfo tsi2 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got2);
+                if (tsi2 != null)
+                    return MinutesWatchedMetric(gsi1, tsi2);
+
+                throw new InvalidGenreOrTagException(got2 + " is not a valid genre or tag.");
+            }
+
+            TagStatInfo tsi1 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got1);
+            if (tsi1 != null)
             {
-                UserTagStatistic cts = pAuth.Statistics.Anime.Tags.Find(ts => ts.Tag.Name == tag.Name);
-                return cts == null ? new TagStatInfo(tag.Name, tag.Category)
-                    : new TagStatInfo(tag.Name, tag.Category, cts.Count, cts.MinutesWatched);
-            }).ToList();
+                GenreStatInfo gsi2 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got2);
+                if (gsi2 != null)
+                    return MinutesWatchedMetric(tsi1, gsi2);
 
-            initialized = true;
+                TagStatInfo tsi2 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got2);
+                if (tsi2 != null)
+                    return MinutesWatchedMetric(tsi1, tsi2);
+
+                throw new InvalidGenreOrTagException(got2 + " is not a valid genre or tag.");
+            }
+            throw new InvalidGenreOrTagException(got1 + " is not a valid genre or tag.");
+        }
+
+        /// <summary>
+        /// Metric function based on count for genres or tags.
+        /// Determines what each parameter is, either a genre or tag, and applies the correct metric function.
+        /// </summary>
+        /// <param name="got1">Genre or Tag 1</param>
+        /// <param name="got2">Genre or Tag 2</param>
+        /// <remarks>May throw an InvalidGenreOrTagException.</remarks>
+        /// <returns>The distance between got1 and got2.</returns>
+        public int CountMetric(string got1, string got2)
+        {
+            GenreStatInfo gsi1 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got1);
+            if (gsi1 != null)
+            {
+                GenreStatInfo gsi2 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got2);
+                if (gsi2 != null)
+                    return CountMetric(gsi1, gsi2);
+
+                TagStatInfo tsi2 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got2);
+                if (tsi2 != null)
+                    return CountMetric(gsi1, tsi2);
+
+                throw new InvalidGenreOrTagException(got2 + " is not a valid genre or tag.");
+            }
+
+            TagStatInfo tsi1 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got1);
+            if (tsi1 != null)
+            {
+                GenreStatInfo gsi2 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got2);
+                if (gsi2 != null)
+                    return CountMetric(tsi1, gsi2);
+
+                TagStatInfo tsi2 = genreAndTagStatInfo.TagsStatInfo.Find(tsi => tsi.Name == got2);
+                if (tsi2 != null)
+                    return CountMetric(tsi1, tsi2);
+
+                throw new InvalidGenreOrTagException(got2 + " is not a valid genre or tag.");
+            }
+            throw new InvalidGenreOrTagException(got1 + " is not a valid genre or tag.");
         }
 
         /// <summary>
@@ -69,11 +120,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="g2">Genre 2</param>
         /// <remarks>This turns the set of genres into a metric space.</remarks>
         /// <returns>The distance between the two genres.</returns>
-        public int CountMetric(GenreStatInfo g1, GenreStatInfo g2)
+        private int CountMetric(GenreStatInfo g1, GenreStatInfo g2)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (g1 == null)
                 throw new ArgumentNullException(nameof(g1));
             if (g2 == null)
@@ -91,11 +139,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t2">Tag 2</param>
         /// <remarks>This turns the set of tags into a metric space.</remarks>
         /// <returns>The distance between two tags.</returns>
-        public int CountMetric(TagStatInfo t1, TagStatInfo t2)
+        private int CountMetric(TagStatInfo t1, TagStatInfo t2)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (t1 == null)
                 throw new ArgumentNullException(nameof(t1));
             if (t2 == null)
@@ -115,11 +160,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t">Tag</param>
         /// <remarks>By defining symmetry in the arguments this turns the set of genres and tags in a metric space.</remarks>
         /// <returns>The distance between the genre and the tag.</returns>
-        public int CountMetric(GenreStatInfo g, TagStatInfo t)
+        private int CountMetric(GenreStatInfo g, TagStatInfo t)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (g == null)
                 throw new ArgumentNullException(nameof(g));
             if (t == null)
@@ -134,7 +176,7 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t">Tag</param>
         /// <param name="g">Genre</param>
         /// <returns>Distance between g and t.</returns>
-        public int CountMetric(TagStatInfo t, GenreStatInfo g)
+        private int CountMetric(TagStatInfo t, GenreStatInfo g)
         {
             return CountMetric(g, t);
         }
@@ -145,7 +187,7 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t">Tag</param>
         /// <param name="g">Genre</param>
         /// <returns>Distance between g and t (in terms of minutes watched).</returns>
-        public int MinutesWatchedMetric(TagStatInfo t, GenreStatInfo g)
+        private int MinutesWatchedMetric(TagStatInfo t, GenreStatInfo g)
         {
             return MinutesWatchedMetric(g, t);
         }
@@ -157,11 +199,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t">Tag</param>
         /// <remarks>By defining symmetry in the arguments this turns the set of genres and tags in a metric space.</remarks>
         /// <returns>The distance between the genre and the tag.</returns>
-        public int MinutesWatchedMetric(GenreStatInfo g, TagStatInfo t)
+        private int MinutesWatchedMetric(GenreStatInfo g, TagStatInfo t)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (g == null)
                 throw new ArgumentNullException(nameof(g));
             if (t == null)
@@ -176,11 +215,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="t1">Tag 1</param>
         /// <param name="t2">Tag 2</param>
         /// <returns>The distance between two tags (in terms of minutes watched).</returns>
-        public int MinutesWatchedMetric(TagStatInfo t1, TagStatInfo t2)
+        private int MinutesWatchedMetric(TagStatInfo t1, TagStatInfo t2)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (t1 == null)
                 throw new ArgumentNullException(nameof(t1));
             if (t2 == null)
@@ -199,11 +235,8 @@ namespace ReBoogiepopT.Recommendation.MetricLift
         /// <param name="g1">Genre 1</param>
         /// <param name="g2">Genre 2</param>
         /// <returns>The distance between the two genres (in terms of minutes watched).</returns>
-        public int MinutesWatchedMetric(GenreStatInfo g1, GenreStatInfo g2)
+        private int MinutesWatchedMetric(GenreStatInfo g1, GenreStatInfo g2)
         {
-            if (!initialized)
-                throw new Exception("Instance not explicitly initialized.");
-
             if (g1 == null)
                 throw new ArgumentNullException(nameof(g1));
             if (g2 == null)
