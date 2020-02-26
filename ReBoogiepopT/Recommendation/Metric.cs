@@ -18,8 +18,6 @@ namespace ReBoogiepopT.Recommendation
     {
         private GenreAndTagStatInfo genreAndTagStatInfo;
 
-        private readonly string pAuthUserName;
-
         private const int constNonRelevancy = 2;
         private const int constRelevancy = 1;
 

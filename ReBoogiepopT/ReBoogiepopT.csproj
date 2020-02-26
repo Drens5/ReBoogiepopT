@@ -121,6 +121,7 @@
     <Compile Include="Recommendation\CoupledTag.cs" />
     <Compile Include="Recommendation\Exceptions\InvalidGenreOrTagException.cs" />
     <Compile Include="Recommendation\GenreAndTagStatInfo.cs" />
+    <Compile Include="Recommendation\GenreTagConnection.cs" />
     <Compile Include="Recommendation\Metric.cs" />
     <Compile Include="Recommendation\GenreStatInfo.cs" />
     <Compile Include="Recommendation\MetricLift.cs" />
