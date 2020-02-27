@@ -66,4 +66,18 @@ namespace ReBoogiepopT.ApiCommunication.OperationObjects.Variables
             this.name = name;
         }
     }
+
+    /// <summary>
+    /// Class defines a variable field for a GraphQL operation request in which a single id, called "id", is provided.
+    /// </summary>
+    [JsonObject(MemberSerialization.Fields)]
+    public class Id
+    {
+        private readonly int id;
+
+        public Id(int id)
+        {
+            this.id = id;
+        }
+    }
 }

@@ -40,7 +40,7 @@ namespace ReBoogiepopT.Recommendation
         /// Mode of metric lift.
         /// The arrow goes from 1 -> 2.
         /// </summary>
-        private readonly MetricLiftMode mode;
+        public MetricLiftMode MetricLiftMode { get; set; }
 
         /// <summary>
         /// MediaId of the apt media for applying metriclift.
@@ -52,5 +52,47 @@ namespace ReBoogiepopT.Recommendation
         /// The apt media itself.
         /// </summary>
         private Media aptMedia;
+
+        /// <summary>
+        /// The metric to be used for this instance of metriclift.
+        /// </summary>
+        private readonly Metric metric;
+
+        /// <summary>
+        /// Mode in which the metric will be used.
+        /// </summary>
+        /// <remarks>May be chaned in an instance of metriclift.</remarks>
+        public MetricMode MetricMode { get; set; }
+
+        /// <summary>
+        /// Base difference vector.
+        /// </summary>
+        private List<GenreTagConnection> baseDifferenceVector;
+
+        public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric, MetricMode metricMode)
+        {
+            this.baseMediaId1 = baseMediaId1;
+            this.baseMediaId2 = baseMediaId2;
+            this.MetricLiftMode = mode;
+            this.metric = metric;
+            this.MetricMode = metricMode;
+        }
+
+        public MetricLift(int baseMediaId1, int baseMediaId2, int aptMediaId, MetricLiftMode mode, Metric metric, MetricMode metricMode)
+            : this(baseMediaId1, baseMediaId2, mode, metric, metricMode)
+        {
+            AptMediaId = aptMediaId;
+        }
+
+        public async Task ChangeAptMedia(int mediaId)
+        {
+            AptMediaId = mediaId;
+            await GetAptMedia();
+        }
+
+        private async Task GetAptMedia()
+        {
+            aptMedia = await Operation.MediaById(AptMediaId);
+        }
     }
 }

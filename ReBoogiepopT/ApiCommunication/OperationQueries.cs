@@ -155,5 +155,22 @@ namespace ReBoogiepopT.ApiCommunication
               }
             }
         ";
+
+        private const string mediaById = @"
+            query mediaById($id: Int!) {
+              Media(id: $id){
+                title {
+                  native
+                  english
+                  romaji
+                }
+                genres
+                tags {
+                  name
+                  category
+                }
+              }
+            }
+        ";
     }
 }

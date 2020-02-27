@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace ReBoogiepopT.Recommendation
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// There are multiple ways to do this: 1. statistics field from user query, 2. manually traversing list and aggregating tags and genres,
+    /// 3. traversing only the favourites and aggregating the tags and genres.
+    /// 1 and 2 are comparable in that 2 is finer than 1, since 1 is limited to 30 tags for non tier 3 donators. Method 2 bypasses that.
+    /// </remarks>
     public class GenreAndTagStatInfo
     {
         public List<TagStatInfo> TagsStatInfo { get; set; }

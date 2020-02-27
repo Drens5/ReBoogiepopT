@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace ReBoogiepopT.Recommendation
 {
+    public enum MetricMode {Count, MinutesWatched}
+
     /// <summary>
     /// Recommendation method which defines a metric on the set of all anime, turning this set into a metric space.
     /// Recommandation can e.g. be done by selecting anime in a neighborhood from a particular one and sorting by distance.
