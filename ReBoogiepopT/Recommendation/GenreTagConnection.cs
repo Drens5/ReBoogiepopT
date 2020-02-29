@@ -13,27 +13,41 @@ namespace ReBoogiepopT.Recommendation
     /// <summary>
     /// Defines a connection between two genres or tags, or between a genre and a tag.
     /// </summary>
-    class GenreTagConnection
+    public class GenreTagConnection
     {
         /// <summary>
         /// Genre or tag 1.
         /// </summary>
-        private readonly string got1;
+        public string GoT1 { get; }
 
         /// <summary>
         /// Genre or tag 2.
         /// </summary>
-        private readonly string got2;
+        public string GoT2 { get; }
 
         /// <summary>
         /// Distance between got1 and got2.
         /// </summary>
-        private readonly int distance;
+        private int distance;
+
+        public int Distance { get => distance; }
+
+        /// <summary>
+        /// Halven the distance and round up.
+        /// </summary>
+        /// <remarks>
+        /// One may consider if it's worth using doubles instead of integers. But only in the case of distance = 2 is
+        /// this operation trivial.
+        /// </remarks>
+        public void HalvenDistance()
+        {
+            distance = (int) Math.Ceiling(0.5 * distance);
+        }
 
         public GenreTagConnection(string got1, string got2, int distance)
         {
-            this.got1 = got1;
-            this.got2 = got2;
+            this.GoT1 = got1;
+            this.GoT2 = got2;
             this.distance = distance;
         }
 
@@ -58,10 +72,20 @@ namespace ReBoogiepopT.Recommendation
         /// <returns></returns>
         public bool SameArrow(string got1, string got2)
         {
-            if (got1 == this.got1)
-                if (got2 == this.got2)
+            if (got1 == this.GoT1)
+                if (got2 == this.GoT2)
                     return true;
             return false;
+        }
+
+        public bool SameArrow(GenreTagConnection gtc)
+        {
+            return SameArrow(gtc.GoT1, gtc.GoT2);
+        }
+
+        public bool SameConnection(GenreTagConnection gtc)
+        {
+            return SameConnection(gtc.GoT1, gtc.GoT2);
         }
     }
 }

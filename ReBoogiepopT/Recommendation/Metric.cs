@@ -18,12 +18,14 @@ namespace ReBoogiepopT.Recommendation
     /// </summary>
     public class Metric
     {
+        public MetricMode Mode { get; set; }
+
         private GenreAndTagStatInfo genreAndTagStatInfo;
 
         private const int constNonRelevancy = 2;
         private const int constRelevancy = 1;
 
-        public Metric(GenreAndTagStatInfo genreAndTagStatInfo)
+        private Metric(GenreAndTagStatInfo genreAndTagStatInfo)
         {
             if (genreAndTagStatInfo == null)
                 throw new ArgumentNullException(nameof(genreAndTagStatInfo));
@@ -31,6 +33,35 @@ namespace ReBoogiepopT.Recommendation
                 throw new Exception("Instance not explicitly initialized.");
 
             this.genreAndTagStatInfo = genreAndTagStatInfo;
+        }
+
+        public Metric(GenreAndTagStatInfo genreAndTagStatInfo, MetricMode mode)
+            : this(genreAndTagStatInfo)
+        {
+            Mode = mode;
+        }
+
+        /// <summary>
+        /// Gives the distance between two genres or tags.
+        /// </summary>
+        /// <param name="got1">Genre or Tag 1</param>
+        /// <param name="got2">Genre or Tag 2</param>
+        /// <returns>The distance between the two tags or genres, or between a tag and a genre.</returns>
+        /// <remarks>
+        /// May throw ArgumentOutOfRangeException if the mode is invalid.
+        /// May throw InvalidGenreOrTagException if the genre or tag is invalid.
+        /// </remarks>
+        public int Distance(string got1, string got2)
+        {
+            switch (Mode)
+            {
+                case MetricMode.Count:
+                    return CountMetric(got1, got2);
+                case MetricMode.MinutesWatched:
+                    return MinutesWatchedMetric(got1, got2);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Mode), "Metric mode passed is invalid!");
+            }
         }
 
         /// <summary>
@@ -41,7 +72,7 @@ namespace ReBoogiepopT.Recommendation
         /// <param name="got2">Genre or Tag 2</param>
         /// <remarks>May throw an InvalidGenreOrTagException.</remarks>
         /// <returns>The distance between got1 and got2 (in terms of minutes watched).</returns>
-        public int MinutesWatchedMetric(string got1, string got2)
+        private int MinutesWatchedMetric(string got1, string got2)
         {
             GenreStatInfo gsi1 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got1);
             if (gsi1 != null)
@@ -81,7 +112,7 @@ namespace ReBoogiepopT.Recommendation
         /// <param name="got2">Genre or Tag 2</param>
         /// <remarks>May throw an InvalidGenreOrTagException.</remarks>
         /// <returns>The distance between got1 and got2.</returns>
-        public int CountMetric(string got1, string got2)
+        private int CountMetric(string got1, string got2)
         {
             GenreStatInfo gsi1 = genreAndTagStatInfo.GenresStatInfo.Find(gsi => gsi.Name == got1);
             if (gsi1 != null)

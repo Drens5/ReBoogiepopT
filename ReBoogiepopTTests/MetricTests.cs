@@ -20,9 +20,9 @@ namespace ReBoogiepopTTests
             GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5");
             await statInfo.Initialize();
 
-            Metric metric = new Metric(statInfo);
+            Metric metric = new Metric(statInfo, MetricMode.Count);
             // Act
-            int actualDistance = metric.CountMetric("Female Protagonist", "Primarily Female Cast");
+            int actualDistance = metric.Distance("Female Protagonist", "Primarily Female Cast");
 
             // Assert
             // This is dependent on the user so check first if the assert values are still correct.
@@ -36,28 +36,28 @@ namespace ReBoogiepopTTests
             GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5");
             await statInfo.Initialize();
 
-            Metric metric = new Metric(statInfo);
+            Metric metric = new Metric(statInfo, MetricMode.Count);
             // Act
 
             // Assert
             Assert.ThrowsException<InvalidGenreOrTagException>(() =>
             {
-                metric.CountMetric("invalid", "Female Protagonist");
+                metric.Distance("invalid", "Female Protagonist");
             });
 
             Assert.ThrowsException<InvalidGenreOrTagException>(() =>
             {
-                metric.CountMetric("Female Protagonist", "invalid");
+                metric.Distance("Female Protagonist", "invalid");
             });
 
             Assert.ThrowsException<InvalidGenreOrTagException>(() =>
             {
-                metric.CountMetric("Comedy", "invalid");
+                metric.Distance("Comedy", "invalid");
             });
 
             Assert.ThrowsException<InvalidGenreOrTagException>(() =>
             {
-                metric.CountMetric("invalid", "Comedy");
+                metric.Distance("invalid", "Comedy");
             });
         }
     }

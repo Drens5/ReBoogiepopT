@@ -56,30 +56,29 @@ namespace ReBoogiepopT.Recommendation
         /// <summary>
         /// The metric to be used for this instance of metriclift.
         /// </summary>
+        /// <remarks>Keep an eye on the mode.</remarks>
         private readonly Metric metric;
 
-        /// <summary>
-        /// Mode in which the metric will be used.
-        /// </summary>
-        /// <remarks>May be chaned in an instance of metriclift.</remarks>
-        public MetricMode MetricMode { get; set; }
+        public void ChangeMetricMode(MetricMode mode)
+        {
+            metric.Mode = mode;
+        }
 
         /// <summary>
         /// Base difference vector.
         /// </summary>
         private List<GenreTagConnection> baseDifferenceVector;
 
-        public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric, MetricMode metricMode)
+        public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric)
         {
             this.baseMediaId1 = baseMediaId1;
             this.baseMediaId2 = baseMediaId2;
             this.MetricLiftMode = mode;
             this.metric = metric;
-            this.MetricMode = metricMode;
         }
 
-        public MetricLift(int baseMediaId1, int baseMediaId2, int aptMediaId, MetricLiftMode mode, Metric metric, MetricMode metricMode)
-            : this(baseMediaId1, baseMediaId2, mode, metric, metricMode)
+        public MetricLift(int baseMediaId1, int baseMediaId2, int aptMediaId, MetricLiftMode mode, Metric metric)
+            : this(baseMediaId1, baseMediaId2, mode, metric)
         {
             AptMediaId = aptMediaId;
         }
@@ -93,6 +92,108 @@ namespace ReBoogiepopT.Recommendation
         private async Task GetAptMedia()
         {
             aptMedia = await Operation.MediaById(AptMediaId);
+        }
+
+        /// <summary>
+        /// Calculates the distance of every arrow from a genre or tag of m1 to a genre or tag of m2.
+        /// </summary>
+        /// <param name="m1"></param>
+        /// <param name="m2"></param>
+        /// <returns>A vector with the distance of each arrow in a component.</returns>
+        private List<GenreTagConnection> CompleteDifferenceVectorArrow(Media m1, Media m2)
+        {
+            List<GenreTagConnection> cdv = new List<GenreTagConnection>((m1.Genres.Count + m1.Tags.Count)
+                * (m2.Genres.Count + m2.Tags.Count));
+
+            // Add all arrows from m1 genres to m2 genres.
+            foreach (string m1g in m1.Genres)
+            {
+                foreach (string m2g in m2.Genres)
+                {
+                    cdv.Add(new GenreTagConnection(m1g, m2g, metric.Distance(m1g, m2g)));
+                }
+            }
+
+            // Add all arrows from m1 genres to m2 tags.
+            foreach (string m1g in m1.Genres)
+            {
+                foreach (MediaTag m2t in m2.Tags)
+                {
+                    cdv.Add(new GenreTagConnection(m1g, m2t.Name, metric.Distance(m1g, m2t.Name)));
+                }
+            }
+
+            // Add all arrows from m1 tags to m2 genres.
+            foreach (MediaTag m1t in m1.Tags)
+            {
+                foreach (string m2g in m2.Genres)
+                {
+                    cdv.Add(new GenreTagConnection(m1t.Name, m2g, metric.Distance(m1t.Name, m2g)));
+                }
+            }
+
+            // Add all arrows from m1 tags to m2 tags.
+            foreach (MediaTag m1t in m1.Tags)
+            {
+                foreach (MediaTag m2t in m2.Tags)
+                {
+                    cdv.Add(new GenreTagConnection(m1t.Name, m2t.Name, metric.Distance(m1t.Name, m2t.Name)));
+                }
+            }
+
+            return cdv;
+        }
+
+        /// <summary>
+        /// Calculates the distance of every connection between a genre or tag from m1 and a genre or tag of m2.
+        /// </summary>
+        /// <param name="m1">Media 1</param>
+        /// <param name="m2">Media 2</param>
+        /// <returns>A vector with the distance of each connection in a component.</returns>
+        /// <remarks>
+        /// 1. Differs from arrow in that the direction is irrelevant, though if an arrow appears in both directions the distance is
+        ///    halved (and round up).
+        /// 2. Theorem: Arrow A_1 -> B_2 exists explicitly in the collection of reversed arrows, that is arrows of the form C_2 -> D_1.
+        ///             <=> Arrows A_1 -> B_2 and B_1 -> A_2 both exist explicitly.
+        ///    Notational remark: subscript stands for the media and the symbol in front for the tag or genre name. So A_1 means tag
+        ///    or genre A from media 1.
+        ///    
+        ///    Proof: =>: By assumption A_1 -> B_2 exists explicitly in the collection of reversed arrows, so there exists an arrow
+        ///    A_2 -> B_1. But this implies B is a genre or tag of media 1 and A is a genre or tag of media 2 so the arrow
+        ///    B_1 -> A_2 exists in the collection or arrows from media 1 to media 2.
+        ///           <=: Assume Arrows A_1 -> B_2 and B_1 -> A_2 both exist explicitly. Then A and B are both genre or tags of media 1
+        ///    and media 2. Hence the arrow A_2 -> B_1 exists in the collectrion of reversed arrows.
+        /// 3. Since the arrow in the other direction exists explicitly if the reversed arrow exists (by the above theorem)
+        ///    it needs to be found and removed anyway.
+        /// 4. Moreover since the existence of the reversed arrow in the initial direction implies the existence of the reversed arrow
+        ///    in the collection of reversed arrows it is not necessary to work with the collection of reversed arrows. In fact it's less
+        ///    efficient since there would be a list traversal to find the arrow in the collection of reversed arrows and there would need
+        ///    to be a traversal to remove the reversed arrow, whoms existence is assured by the theorem above, from the initial collection
+        ///    of arrows. One would rather look for the reversed arrow in the initial collection of arrows, remove it and halven the
+        ///    distance of the remaining connection!
+        /// </remarks>
+        private List<GenreTagConnection> CompleteDifferenceVectorConnection(Media m1, Media m2)
+        {
+            List<GenreTagConnection> cdv = CompleteDifferenceVectorArrow(m1, m2);
+
+            // New list created, since rather not mend the list that's being looped over.
+            List<GenreTagConnection> cdvConnection = new List<GenreTagConnection>(cdv.Count);
+
+            foreach (GenreTagConnection gtc in cdv)
+            {
+                GenreTagConnection alreadyExistingSameConnection = cdvConnection.Find(cdvConnectionGtc => cdvConnectionGtc.SameConnection(gtc));
+
+                // The connection does already exist.
+                if (alreadyExistingSameConnection != null)
+                    alreadyExistingSameConnection.HalvenDistance();
+
+
+                // The connection does not already exist.
+                else
+                    cdvConnection.Add(gtc);
+            }
+
+            return cdvConnection;
         }
     }
 }
