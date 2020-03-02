@@ -12,6 +12,18 @@ namespace ReBoogiepopT.Recommendation
 {
     public enum MetricLiftMode { Connection, Arrow }
 
+    public class MetricLiftAggregation
+    {
+        public Media Media { get; }
+
+        public int InnerProductWithBase { get; }
+
+        public MetricLiftAggregation(Media media, int innerProductWithBase)
+        {
+            Media = media;
+            InnerProductWithBase = innerProductWithBase;
+        }
+    }
     /// <summary>
     /// Recommendation method which combines elements from Metric and VectorLift to provide a different method for
     /// selecting / aggregating / sorting anime.
@@ -54,6 +66,26 @@ namespace ReBoogiepopT.Recommendation
         private Media aptMedia;
 
         /// <summary>
+        /// Fetches the apt media and assigns it to the designated field.
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetAptMedia()
+        {
+            aptMedia = await Operation.MediaById(AptMediaId);
+        }
+
+        /// <summary>
+        /// Assign the apt media id and the apt media to the designated fields.
+        /// </summary>
+        /// <param name="mediaId"></param>
+        /// <returns></returns>
+        public async Task ChangeAptMedia(int mediaId)
+        {
+            AptMediaId = mediaId;
+            await GetAptMedia();
+        }
+
+        /// <summary>
         /// The metric to be used for this instance of metriclift.
         /// </summary>
         /// <remarks>Keep an eye on the mode.</remarks>
@@ -69,6 +101,34 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         private List<GenreTagConnection> baseDifferenceVector;
 
+        /// <summary>
+        /// Defines the base difference vector.
+        /// </summary>
+        private async Task DefineBase()
+        {
+            Media baseMedia1 = await Operation.MediaById(baseMediaId1);
+            Media baseMedia2 = await Operation.MediaById(baseMediaId2);
+
+            baseDifferenceVector = CompleteDifferenceVector(baseMedia1, baseMedia2);
+        }
+
+        /// <summary>
+        /// List of media that must be considered using metriclift.
+        /// </summary>
+        /// <remarks>
+        /// May be changed within an instance of metriclift.
+        /// </remarks>
+        public List<Media> MediaToConsider { get; set; }
+
+        /// <summary>
+        /// Applies metriclift to the media to consider.
+        /// </summary>
+        /// <returns>The list of the media tagged with the inner product with base.</returns>
+        public MetricLiftAggregation ApplyMetricLift()
+        {
+            throw new NotImplementedException();
+        }
+
         public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric)
         {
             this.baseMediaId1 = baseMediaId1;
@@ -83,15 +143,23 @@ namespace ReBoogiepopT.Recommendation
             AptMediaId = aptMediaId;
         }
 
-        public async Task ChangeAptMedia(int mediaId)
+        /// <summary>
+        /// Calculates the complete difference vector between the two media.
+        /// </summary>
+        /// <param name="m1"></param>
+        /// <param name="m2"></param>
+        /// <returns></returns>
+        private List<GenreTagConnection> CompleteDifferenceVector(Media m1, Media m2)
         {
-            AptMediaId = mediaId;
-            await GetAptMedia();
-        }
-
-        private async Task GetAptMedia()
-        {
-            aptMedia = await Operation.MediaById(AptMediaId);
+            switch (MetricLiftMode)
+            {
+                case MetricLiftMode.Arrow:
+                    return CompleteDifferenceVectorArrow(m1, m2);
+                case MetricLiftMode.Connection:
+                    return CompleteDifferenceVectorConnection(m1, m2);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(MetricLiftMode), "MetricLiftMode passed is invalid!");
+            }
         }
 
         /// <summary>
@@ -194,6 +262,71 @@ namespace ReBoogiepopT.Recommendation
             }
 
             return cdvConnection;
+        }
+
+        /// <summary>
+        /// Aligns the dimensions, that is connections or arrows, of dv with the base differences vector (discarding any other dimensions)
+        /// then taking the standard inner product on R^k with k the amount of dimensions of base.
+        /// </summary>
+        /// <param name="dv"></param>
+        /// <returns>Inner product on R^k with dv restricted to the dimensions of base.</returns>
+        private int InnerProductWithBase(List<GenreTagConnection> dv)
+        {
+            switch (MetricLiftMode)
+            {
+                case MetricLiftMode.Arrow:
+                    return InnerProductWithBaseArrow(dv);
+                case MetricLiftMode.Connection:
+                    return InnerProductWithBaseConnection(dv);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(MetricLiftMode), "MetricLiftMode passed is invalid!");
+            }
+        }
+
+        /// <summary>
+        /// Aligns the arrows of dv with the base differences vector (discarding any other arrows)
+        /// then taking the standard inner product on R^k with k the amount of arrows of base.
+        /// </summary>
+        /// <param name="dv"></param>
+        /// <returns>Inner product on R^k with dv restricted to the dimensions of base.</returns>
+        /// <remarks>
+        /// Any arrows that don't exist in dv are taken as 0 and hence that term does not contribut anything to the
+        /// inner product.
+        /// </remarks>
+        private int InnerProductWithBaseArrow(List<GenreTagConnection> dv)
+        {
+            int sum = 0;
+            foreach (GenreTagConnection baseGtc in baseDifferenceVector)
+            {
+                GenreTagConnection cBaseGtcArrowInDV = dv.Find(cdvGtc => cdvGtc.SameArrow(baseGtc));
+
+                // If the current arrow being considered in base exists in dv.
+                if (cBaseGtcArrowInDV != null)
+                    sum += cBaseGtcArrowInDV.Distance * baseGtc.Distance;
+
+                // The arrow being considered does not exist in dv.
+                else
+                    continue;
+            }
+            return sum;
+        }
+
+        private int InnerProductWithBaseConnection(List<GenreTagConnection> dv)
+        {
+            int sum = 0;
+            foreach (GenreTagConnection baseGtc in baseDifferenceVector)
+            {
+                GenreTagConnection cBaseGtcConnectionInDV = dv.Find(cdvGtc => cdvGtc.SameConnection(baseGtc));
+
+                // The current base connection being considered exists in dv.
+                if (cBaseGtcConnectionInDV != null)
+                    sum += cBaseGtcConnectionInDV.Distance * baseGtc.Distance;
+
+                // The current base connection being considered does not exist in dv.
+                else
+                    continue;
+            }
+            return sum;
         }
     }
 }

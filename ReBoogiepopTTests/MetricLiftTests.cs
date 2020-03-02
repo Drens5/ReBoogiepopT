@@ -28,7 +28,7 @@ namespace ReBoogiepopTTests
             Media media1 = await Operation.MediaById(104051);
             Media media2 = await Operation.MediaById(20714);
 
-            List<GenreTagConnection> cdv = metricLift.CompleteDifferenceVectorArrow(media1, media2);
+            // List<GenreTagConnection> cdv = metricLift.CompleteDifferenceVectorArrow(media1, media2);
 
             // Assert, by break point.
         }
@@ -48,7 +48,7 @@ namespace ReBoogiepopTTests
             Media media1 = await Operation.MediaById(104051);
             Media media2 = await Operation.MediaById(20714);
 
-            List<GenreTagConnection> cdv = metricLift.CompleteDifferenceVectorConnection(media1, media2);
+            // List<GenreTagConnection> cdv = metricLift.CompleteDifferenceVectorConnection(media1, media2);
 
             // Assert, by break point.
         }
