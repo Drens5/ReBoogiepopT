@@ -16,7 +16,7 @@ namespace ReBoogiepopTTests
         public async Task Initialization_GivesValidResult()
         {
             // Arrange
-            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5");
+            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5", StatInfoMode.Quick);
             await statInfo.Initialize();
             // Act
 

@@ -17,7 +17,7 @@ namespace ReBoogiepopTTests
         public async Task CountMetric_GenreGenre_GivesValidResult()
         {
             // Arrange
-            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5");
+            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5", StatInfoMode.Quick);
             await statInfo.Initialize();
 
             Metric metric = new Metric(statInfo, MetricMode.Count);
@@ -33,7 +33,7 @@ namespace ReBoogiepopTTests
         public async Task CountMetric_InvalidTagOrGenre_ThrowsRightException()
         {
             // Arrange
-            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5");
+            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5", StatInfoMode.Quick);
             await statInfo.Initialize();
 
             Metric metric = new Metric(statInfo, MetricMode.Count);

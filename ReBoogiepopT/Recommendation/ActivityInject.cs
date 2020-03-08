@@ -71,6 +71,15 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         public enum ListActivityStatusSelection { All, CompletedOnly, NotPlanning }
 
+        /// <summary>
+        /// Uses activity inject's method of selecting anime based on inject media.
+        /// </summary>
+        /// <returns>Nubbed list of selected media.</returns>
+        public async Task<List<Media>> ActivityInjectMediaSelection()
+        {
+            List<CountMedia> mediaInQuestion = await RunActivityInject();
+            return mediaInQuestion.Select(cm => cm.Media).ToList();
+        }
 
         /// <summary>
         /// Run the activity inject recommendation method with the settings in this instance.

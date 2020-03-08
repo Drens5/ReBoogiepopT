@@ -34,6 +34,16 @@ namespace ReBoogiepopT.Recommendation
         }
 
         /// <summary>
+        /// Turns the list of media of type MediaList into a nubbed list with entries of type Media.
+        /// </summary>
+        /// <param name="entries">List of entries consisting of media and status.</param>
+        /// <returns>List of media in which a certain media only occurs once.</returns>
+        static public List<Media> Nub(List<MediaList> entries)
+        {
+            return NubC(entries).Select(cm => cm.Media).ToList();
+        }
+
+        /// <summary>
         /// Comparison delegate to sort descending on local popularity.
         /// </summary>
         /// <remarks>That is the popularity based on selected users.</remarks>
@@ -48,8 +58,6 @@ namespace ReBoogiepopT.Recommendation
         /// Comparison delegate to sort descending on global mean score.
         /// </summary>
         static public Comparison<CountMedia> MeanScore = (x, y) => y.Media.MeanScore - x.Media.MeanScore;
-
-
 
         /// <summary>
         /// Filters out media that the user has already seen.

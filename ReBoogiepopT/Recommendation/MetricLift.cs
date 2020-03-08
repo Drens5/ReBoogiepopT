@@ -16,12 +16,15 @@ namespace ReBoogiepopT.Recommendation
     {
         public Media Media { get; }
 
-        public int InnerProductWithBase { get; }
+        /// <summary>
+        /// Norm squared of base minus the inner product of dv with base.
+        /// </summary>
+        public int BaseMinusInnerProductWithBase { get; }
 
         public MetricLiftAggregation(Media media, int innerProductWithBase)
         {
             Media = media;
-            InnerProductWithBase = innerProductWithBase;
+            BaseMinusInnerProductWithBase = innerProductWithBase;
         }
     }
     /// <summary>
@@ -57,8 +60,11 @@ namespace ReBoogiepopT.Recommendation
         /// <summary>
         /// MediaId of the apt media for applying metriclift.
         /// </summary>
-        /// <remarks>One may change the apt media in an instance of metriclift.</remarks>
-        public int AptMediaId { get; set; }
+        /// <remarks>
+        /// One may change the apt media in an instance of metriclift, use ChangeAptMedia for that.
+        /// There is no aptMedia with id of 0.
+        /// </remarks>
+        private int aptMediaId;
 
         /// <summary>
         /// The apt media itself.
@@ -71,7 +77,7 @@ namespace ReBoogiepopT.Recommendation
         /// <returns></returns>
         private async Task GetAptMedia()
         {
-            aptMedia = await Operation.MediaById(AptMediaId);
+            aptMedia = await Operation.MediaById(aptMediaId);
         }
 
         /// <summary>
@@ -81,7 +87,7 @@ namespace ReBoogiepopT.Recommendation
         /// <returns></returns>
         public async Task ChangeAptMedia(int mediaId)
         {
-            AptMediaId = mediaId;
+            aptMediaId = mediaId;
             await GetAptMedia();
         }
 
@@ -113,20 +119,49 @@ namespace ReBoogiepopT.Recommendation
         }
 
         /// <summary>
-        /// List of media that must be considered using metriclift.
+        /// Comparison delegate to sort ascending on the difference of inner product with base to the inner product of base with itself.
         /// </summary>
-        /// <remarks>
-        /// May be changed within an instance of metriclift.
-        /// </remarks>
-        public List<Media> MediaToConsider { get; set; }
+        public Comparison<MetricLiftAggregation> InnerProductToBase = (x, y) => x.BaseMinusInnerProductWithBase - y.BaseMinusInnerProductWithBase;
 
         /// <summary>
         /// Applies metriclift to the media to consider.
         /// </summary>
-        /// <returns>The list of the media tagged with the inner product with base.</returns>
-        public MetricLiftAggregation ApplyMetricLift()
+        /// <param name="mediaToConsider">List of media that must be considered using metriclift.</param>
+        /// <returns>
+        /// The list of the media tagged with the inner product with base, sorted by this latter quantity.
+        /// Returns null if the input list is null.
+        /// </returns>
+        public async Task<List<MetricLiftAggregation>> ApplyMetricLift(List<Media> mediaToConsider)
         {
-            throw new NotImplementedException();
+            if (mediaToConsider == null)
+                return null;
+            
+            // Checks / Initialization
+            if (aptMediaId == 0)
+                throw new FieldAccessException("aptMediaId not set!");
+
+            if (baseDifferenceVector == null)
+                await DefineBase();
+
+            if (aptMedia == null)
+                await GetAptMedia();
+
+            // Application
+            List<MetricLiftAggregation> mediaConsidered = new List<MetricLiftAggregation>(mediaToConsider.Count);
+
+            int baseInnerProductWithBase = InnerProductWithBase(baseDifferenceVector);
+
+            foreach (Media media in mediaToConsider)
+            {
+                List<GenreTagConnection> dv = CompleteDifferenceVector(aptMedia, media);
+                int baseMinusInnerProductWithBase = baseInnerProductWithBase - InnerProductWithBase(dv);
+
+                mediaConsidered.Add(new MetricLiftAggregation(media, baseMinusInnerProductWithBase));
+            }
+
+            mediaConsidered.Sort(InnerProductToBase);
+
+            return mediaConsidered;
         }
 
         public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric)
@@ -140,7 +175,7 @@ namespace ReBoogiepopT.Recommendation
         public MetricLift(int baseMediaId1, int baseMediaId2, int aptMediaId, MetricLiftMode mode, Metric metric)
             : this(baseMediaId1, baseMediaId2, mode, metric)
         {
-            AptMediaId = aptMediaId;
+            this.aptMediaId = aptMediaId;
         }
 
         /// <summary>
@@ -178,7 +213,14 @@ namespace ReBoogiepopT.Recommendation
             {
                 foreach (string m2g in m2.Genres)
                 {
-                    cdv.Add(new GenreTagConnection(m1g, m2g, metric.Distance(m1g, m2g)));
+                    try
+                    {
+                        cdv.Add(new GenreTagConnection(m1g, m2g, metric.Distance(m1g, m2g)));
+                    }
+                    catch (InvalidGenreOrTagException)
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -187,7 +229,15 @@ namespace ReBoogiepopT.Recommendation
             {
                 foreach (MediaTag m2t in m2.Tags)
                 {
-                    cdv.Add(new GenreTagConnection(m1g, m2t.Name, metric.Distance(m1g, m2t.Name)));
+                    try
+                    {
+                        cdv.Add(new GenreTagConnection(m1g, m2t.Name, metric.Distance(m1g, m2t.Name)));
+                    }
+                    catch (InvalidGenreOrTagException)
+                    {
+                        // discard it.
+                        continue;
+                    }
                 }
             }
 
@@ -196,7 +246,14 @@ namespace ReBoogiepopT.Recommendation
             {
                 foreach (string m2g in m2.Genres)
                 {
-                    cdv.Add(new GenreTagConnection(m1t.Name, m2g, metric.Distance(m1t.Name, m2g)));
+                    try
+                    {
+                        cdv.Add(new GenreTagConnection(m1t.Name, m2g, metric.Distance(m1t.Name, m2g)));
+                    }
+                    catch (InvalidGenreOrTagException)
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -205,7 +262,14 @@ namespace ReBoogiepopT.Recommendation
             {
                 foreach (MediaTag m2t in m2.Tags)
                 {
-                    cdv.Add(new GenreTagConnection(m1t.Name, m2t.Name, metric.Distance(m1t.Name, m2t.Name)));
+                    try
+                    {
+                        cdv.Add(new GenreTagConnection(m1t.Name, m2t.Name, metric.Distance(m1t.Name, m2t.Name)));
+                    }
+                    catch (InvalidGenreOrTagException)
+                    {
+                        continue;
+                    }
                 }
             }
 

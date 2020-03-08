@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 namespace ReBoogiepopT.Recommendation
 {
     /// <summary>
+    /// Quicks gets data from userstatistics.
+    /// </summary>
+    public enum StatInfoMode { Quick }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <remarks>
@@ -22,6 +27,8 @@ namespace ReBoogiepopT.Recommendation
         public List<TagStatInfo> TagsStatInfo { get; set; }
         public List<GenreStatInfo> GenresStatInfo { get; set; }
 
+        private readonly StatInfoMode mode;
+
         private readonly string pAuthUserName;
 
         /// <summary>
@@ -30,9 +37,11 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         public bool Initialized { get; set; } = false;
 
-        public GenreAndTagStatInfo(string userName)
+        // Consider an overload for User datatype.
+        public GenreAndTagStatInfo(string userName, StatInfoMode mode)
         {
             pAuthUserName = userName;
+            this.mode = mode;
         }
 
         /// <summary>
@@ -41,6 +50,18 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         /// <returns>Task, async void</returns>
         public async Task Initialize()
+        {
+            switch (mode)
+            {
+                case StatInfoMode.Quick:
+                    await InitializeFromUserStatistics();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), "StatInfoMode mode passed is invalid!");
+            }
+        }
+
+        public async Task InitializeFromUserStatistics()
         {
             List<string> genreCollection = await Operation.GenreCollection();
             List<MediaTag> tagCollection = await Operation.TagCollection();

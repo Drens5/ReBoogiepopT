@@ -119,6 +119,7 @@
     <Compile Include="Recommendation\Aggregation.cs" />
     <Compile Include="Recommendation\CountMedia.cs" />
     <Compile Include="Recommendation\CoupledTag.cs" />
+    <Compile Include="Recommendation\Exceptions\InstanceNotExplicitlyInitializedException.cs" />
     <Compile Include="Recommendation\Exceptions\InvalidGenreOrTagException.cs" />
     <Compile Include="Recommendation\GenreAndTagStatInfo.cs" />
     <Compile Include="Recommendation\GenreTagConnection.cs" />

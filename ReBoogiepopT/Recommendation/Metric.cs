@@ -30,7 +30,7 @@ namespace ReBoogiepopT.Recommendation
             if (genreAndTagStatInfo == null)
                 throw new ArgumentNullException(nameof(genreAndTagStatInfo));
             if (!genreAndTagStatInfo.Initialized)
-                throw new Exception("Instance not explicitly initialized.");
+                throw new InstanceNotExplicitlyInitializedException("Instance of GenreAndTagStatInfo not explicitly initialized!");
 
             this.genreAndTagStatInfo = genreAndTagStatInfo;
         }
