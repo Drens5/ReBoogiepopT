@@ -5,6 +5,7 @@ using ReBoogiepopT.Recommendation.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,9 +20,14 @@ namespace ReBoogiepopT.Recommendation
         /// <summary>
         /// Norm squared of base minus the inner product of dv with base.
         /// </summary>
-        public int BaseMinusInnerProductWithBase { get; }
+        public BigInteger BaseMinusInnerProductWithBase { get; }
 
-        public MetricLiftAggregation(Media media, int innerProductWithBase)
+        /// <summary>
+        /// Instantiate a media tagged with a sorting value.
+        /// </summary>
+        /// <param name="media"></param>
+        /// <param name="innerProductWithBase">Actually the difference of norm squared of base with inner product of dv with base.</param>
+        public MetricLiftAggregation(Media media, BigInteger innerProductWithBase)
         {
             Media = media;
             BaseMinusInnerProductWithBase = innerProductWithBase;
@@ -121,7 +127,7 @@ namespace ReBoogiepopT.Recommendation
         /// <summary>
         /// Comparison delegate to sort ascending on the difference of inner product with base to the inner product of base with itself.
         /// </summary>
-        public Comparison<MetricLiftAggregation> InnerProductToBase = (x, y) => x.BaseMinusInnerProductWithBase - y.BaseMinusInnerProductWithBase;
+        // public Comparison<MetricLiftAggregation> InnerProductToBase = (x, y) => x.BaseMinusInnerProductWithBase - y.BaseMinusInnerProductWithBase;
 
         /// <summary>
         /// Applies metriclift to the media to consider.
@@ -149,19 +155,17 @@ namespace ReBoogiepopT.Recommendation
             // Application
             List<MetricLiftAggregation> mediaConsidered = new List<MetricLiftAggregation>(mediaToConsider.Count);
 
-            int baseInnerProductWithBase = InnerProductWithBase(baseDifferenceVector);
+            BigInteger baseInnerProductWithBase = InnerProductWithBase(baseDifferenceVector);
 
             foreach (Media media in mediaToConsider)
             {
                 List<GenreTagConnection> dv = CompleteDifferenceVector(aptMedia, media);
-                int baseMinusInnerProductWithBase = baseInnerProductWithBase - InnerProductWithBase(dv);
+                BigInteger baseMinusInnerProductWithBase = baseInnerProductWithBase - InnerProductWithBase(dv);
 
                 mediaConsidered.Add(new MetricLiftAggregation(media, baseMinusInnerProductWithBase));
             }
 
-            mediaConsidered.Sort(InnerProductToBase);
-
-            return mediaConsidered;
+            return mediaConsidered.OrderBy(mla => mla.BaseMinusInnerProductWithBase).ToList();
         }
 
         public MetricLift(int baseMediaId1, int baseMediaId2, MetricLiftMode mode, Metric metric)
@@ -334,7 +338,7 @@ namespace ReBoogiepopT.Recommendation
         /// </summary>
         /// <param name="dv"></param>
         /// <returns>Inner product on R^k with dv restricted to the dimensions of base.</returns>
-        private int InnerProductWithBase(List<GenreTagConnection> dv)
+        private BigInteger InnerProductWithBase(List<GenreTagConnection> dv)
         {
             switch (MetricLiftMode)
             {
@@ -357,9 +361,9 @@ namespace ReBoogiepopT.Recommendation
         /// Any arrows that don't exist in dv are taken as 0 and hence that term does not contribut anything to the
         /// inner product.
         /// </remarks>
-        private int InnerProductWithBaseArrow(List<GenreTagConnection> dv)
+        private BigInteger InnerProductWithBaseArrow(List<GenreTagConnection> dv)
         {
-            int sum = 0;
+            BigInteger sum = 0;
             foreach (GenreTagConnection baseGtc in baseDifferenceVector)
             {
                 GenreTagConnection cBaseGtcArrowInDV = dv.Find(cdvGtc => cdvGtc.SameArrow(baseGtc));
@@ -375,9 +379,9 @@ namespace ReBoogiepopT.Recommendation
             return sum;
         }
 
-        private int InnerProductWithBaseConnection(List<GenreTagConnection> dv)
+        private BigInteger InnerProductWithBaseConnection(List<GenreTagConnection> dv)
         {
-            int sum = 0;
+            BigInteger sum = 0;
             foreach (GenreTagConnection baseGtc in baseDifferenceVector)
             {
                 GenreTagConnection cBaseGtcConnectionInDV = dv.Find(cdvGtc => cdvGtc.SameConnection(baseGtc));

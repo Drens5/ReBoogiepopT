@@ -53,12 +53,14 @@ namespace ReBoogiepopTTests
             // Assert, by break point.
         }
 
-        [TestMethod]
+        // [TestMethod]
         public async Task ApplyMetricLiftWithMediaFetchesFromActivityInject_GivesValidResult()
         {
             // Arrange
+            User pAuth = await Operation.UserFavoritesStatistics("Drens5");
+
             // Set up metriclift
-            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo("Drens5", StatInfoMode.Quick);
+            GenreAndTagStatInfo statInfo = new GenreAndTagStatInfo(pAuth, StatInfoMode.Quick);
             await statInfo.Initialize();
             Metric metric = new Metric(statInfo, MetricMode.Count);
 
@@ -67,7 +69,6 @@ namespace ReBoogiepopTTests
             // Set up media to aggregate with metriclift, using activity inject.
             List<int> injectMedia = new List<int>();
             injectMedia.Add(15227);
-            User pAuth = await Operation.UserFavoritesStatistics("Drens5");
             ActivityInject testActivityInject = new ActivityInject(injectMedia, 50, ActivityInject.ListActivityStatusSelection.All, pAuth);
 
             List<Media> mediaToConsider = await testActivityInject.ActivityInjectMediaSelection();

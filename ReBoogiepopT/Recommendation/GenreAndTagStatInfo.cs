@@ -12,7 +12,7 @@ namespace ReBoogiepopT.Recommendation
     /// <summary>
     /// Quicks gets data from userstatistics.
     /// </summary>
-    public enum StatInfoMode { Quick }
+    public enum StatInfoMode { Quick, Sophisticated }
 
     /// <summary>
     /// 
@@ -31,16 +31,23 @@ namespace ReBoogiepopT.Recommendation
 
         private readonly string pAuthUserName;
 
+        private User pAuth;
+
         /// <summary>
         /// Flag to check on invocation.
         /// Throw exception if a member tries to do something without the class being initialized.
         /// </summary>
         public bool Initialized { get; set; } = false;
 
-        // Consider an overload for User datatype.
         public GenreAndTagStatInfo(string userName, StatInfoMode mode)
         {
             pAuthUserName = userName;
+            this.mode = mode;
+        }
+
+        public GenreAndTagStatInfo(User user, StatInfoMode mode)
+        {
+            pAuth = user;
             this.mode = mode;
         }
 
@@ -56,6 +63,8 @@ namespace ReBoogiepopT.Recommendation
                 case StatInfoMode.Quick:
                     await InitializeFromUserStatistics();
                     break;
+                case StatInfoMode.Sophisticated:
+                    throw new NotImplementedException();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode), "StatInfoMode mode passed is invalid!");
             }
@@ -66,7 +75,8 @@ namespace ReBoogiepopT.Recommendation
             List<string> genreCollection = await Operation.GenreCollection();
             List<MediaTag> tagCollection = await Operation.TagCollection();
 
-            User pAuth = await Operation.UserFavoritesStatistics(pAuthUserName);
+            if (pAuth == null)
+                pAuth = await Operation.UserFavoritesStatistics(pAuthUserName);
 
             GenresStatInfo = genreCollection.Select(name =>
             {
