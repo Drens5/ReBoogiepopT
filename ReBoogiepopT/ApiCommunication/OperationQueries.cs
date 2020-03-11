@@ -65,6 +65,7 @@ namespace ReBoogiepopT.ApiCommunication
                 lists {
                   status
                   entries {
+                    progress
                     status
                     media {
                       id
@@ -75,6 +76,7 @@ namespace ReBoogiepopT.ApiCommunication
                       }
                       description
                       siteUrl
+                      duration
                       coverImage {
                         large
                         medium

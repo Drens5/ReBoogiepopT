@@ -12,8 +12,8 @@ namespace ReBoogiepopT.Recommendation
     public class GenreStatInfo
     {
         public string Name { get; }
-        public int Count { get; }
-        public int MinutesWatched { get; }
+        public int Count { get; set; }
+        public int MinutesWatched { get; set; }
 
         public GenreStatInfo(string name, int count, int minutesWatched)
         {
