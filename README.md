@@ -81,6 +81,6 @@ Moreover since the dimensions are represented by pairs of genres and tags when t
 The above describes the basic workings of MetricLift.
 The media ids mentioned are all anilist anime ids.
 Here is an example of properly input settings for MetricLift:  
-![alt text](https://imgur.com/VZTWWi9) "Example Settings MetricLift")
+![alt text](https://i.imgur.com/VZTWWi9.png) "Example Settings MetricLift")
 
 MetricLift is currently usuable in ReBoogiepopT together with Activity Inject, since MetricLift at its core is a way of sorting a collection of anime; whereas Activity Inject at its core is a way of fetching anime which can then be sorted.
