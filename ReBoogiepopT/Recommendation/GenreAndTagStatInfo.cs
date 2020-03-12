@@ -12,7 +12,7 @@ namespace ReBoogiepopT.Recommendation
     /// <summary>
     /// Quicks gets data from userstatistics.
     /// </summary>
-    public enum StatInfoMode { Quick, Sophisticated }
+    public enum StatInfoMode { Quick, Sophisticated, Favourites }
 
     /// <summary>
     /// 
@@ -66,18 +66,59 @@ namespace ReBoogiepopT.Recommendation
                 case StatInfoMode.Sophisticated:
                     await InitializeFromList();
                     break;
+                case StatInfoMode.Favourites:
+                    await InitializeFavourites();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode), "StatInfoMode mode passed is invalid!");
             }
         }
 
-        public async Task InitializeFromList()
+        public async Task InitializeFavourites()
         {
-            List<string> genreCollection = await Operation.GenreCollection();
-            List<MediaTag> tagCollection = await Operation.TagCollection();
+            InitializeStatInfoEmpty();
 
             if (pAuth == null)
                 pAuth = await Operation.UserFavoritesStatistics(pAuthUserName);
+
+            List<MediaList> userMediaListList = await Operation.UserMediaListDownToMediaList(pAuth.Id);
+
+            foreach (Media media in pAuth.Favourites.Anime.Nodes)
+            {
+                MediaList cml = userMediaListList.Find(m => m.Media.Id == media.Id);
+
+                if (cml == null)
+                    // Favourite but not on list. :thinking:
+                    continue;
+                else
+                {
+                    AddStatInfo(cml);
+                }
+            }
+            Initialized = true;
+        }
+
+        public async Task InitializeFromList()
+        {
+            await InitializeStatInfoEmpty();
+
+            if (pAuth == null)
+                pAuth = await Operation.UserFavoritesStatistics(pAuthUserName);
+
+            List<MediaList> userMediaListList = await Operation.UserMediaListDownToMediaList(pAuth.Id);
+
+            foreach (MediaList medialist in userMediaListList)
+            {
+                AddStatInfo(medialist);
+            }
+
+            Initialized = true;
+        }
+
+        private async Task InitializeStatInfoEmpty()
+        {
+            List<string> genreCollection = await Operation.GenreCollection();
+            List<MediaTag> tagCollection = await Operation.TagCollection();
 
             GenresStatInfo = genreCollection.Select(name =>
             {
@@ -88,38 +129,35 @@ namespace ReBoogiepopT.Recommendation
             {
                 return new TagStatInfo(tag.Name, tag.Category);
             }).ToList();
+        }
 
-            List<MediaList> userMediaListList = await Operation.UserMediaListDownToMediaList(pAuth.Id);
-
-            foreach (MediaList medialist in userMediaListList)
+        private void AddStatInfo(MediaList medialist)
+        {
+            foreach (string genre in medialist.Media.Genres)
             {
-                foreach (string genre in medialist.Media.Genres)
+                GenreStatInfo cgsi = GenresStatInfo.Find(gsi => gsi.Name == genre);
+                if (cgsi == null)
+                    // Invalid genre.
+                    continue;
+                else
                 {
-                    GenreStatInfo cgsi = GenresStatInfo.Find(gsi => gsi.Name == genre);
-                    if (cgsi == null)
-                        continue;
-                    else
-                    {
-                        cgsi.Count += 1;
-                        cgsi.MinutesWatched += medialist.Media.Duration * medialist.Progress;
-                    }
-                }
-
-                foreach (MediaTag tag in medialist.Media.Tags)
-                {
-                    TagStatInfo ctsi = TagsStatInfo.Find(tsi => tsi.Name == tag.Name);
-                    if (ctsi == null)
-                        // Invalid tag.
-                        continue;
-                    else
-                    {
-                        ctsi.Count += 1;
-                        ctsi.MinutesWatched += medialist.Media.Duration * medialist.Progress;
-                    }
+                    cgsi.Count += 1;
+                    cgsi.MinutesWatched += medialist.Media.Duration * medialist.Progress;
                 }
             }
 
-            Initialized = true;
+            foreach (MediaTag tag in medialist.Media.Tags)
+            {
+                TagStatInfo ctsi = TagsStatInfo.Find(tsi => tsi.Name == tag.Name);
+                if (ctsi == null)
+                    // Invalid tag.
+                    continue;
+                else
+                {
+                    ctsi.Count += 1;
+                    ctsi.MinutesWatched += medialist.Media.Duration * medialist.Progress;
+                }
+            }
         }
 
         public async Task InitializeFromUserStatistics()

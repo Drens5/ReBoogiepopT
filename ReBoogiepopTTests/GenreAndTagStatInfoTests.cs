@@ -18,9 +18,11 @@ namespace ReBoogiepopTTests
             // Arrange
             GenreAndTagStatInfo statInfoQuick = new GenreAndTagStatInfo("Drens5", StatInfoMode.Quick);
             GenreAndTagStatInfo statInfoSophisticated = new GenreAndTagStatInfo("Drens5", StatInfoMode.Sophisticated);
+            GenreAndTagStatInfo statInfoFavourites = new GenreAndTagStatInfo("Drens5", StatInfoMode.Favourites);
 
             await statInfoQuick.Initialize();
             await statInfoSophisticated.Initialize();
+            await statInfoFavourites.Initialize();
             // Act
 
             // Assert, by break point.

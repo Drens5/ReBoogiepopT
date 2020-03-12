@@ -132,6 +132,8 @@ namespace ReBoogiepopT
                     statInfoMode = StatInfoMode.Quick;
                 else if (MetricLiftStatInfoRadioButtonSophisticated.Checked)
                     statInfoMode = StatInfoMode.Sophisticated;
+                else if (MetricLiftStatInfoRadioButtonFavourites.Checked)
+                    statInfoMode = StatInfoMode.Favourites;
                 else
                     throw new ArgumentOutOfRangeException("Invalid StatInfoMode in MainForm MetricLiftPanel!");
 
@@ -418,6 +420,10 @@ namespace ReBoogiepopT
 
             MeanScoreLabel.Text = "Sorted by Mean Score";
 
+            ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
+            // This one isn't so bad, maybe even preferable.
+            // InjectMediaTextBox.Text = "";
+
             ResultsPanel.Enabled = false;
             ResultsPanel.Visible = false;
 
@@ -450,6 +456,11 @@ namespace ReBoogiepopT
 
                 MetricLiftPanel.Visible = true;
                 MetricLiftPanel.Enabled = true;
+
+                metriclift = false;
+
+                ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
+                InjectMediaTextBox.Text = "";
             }
         }
 

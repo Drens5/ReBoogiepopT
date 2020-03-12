@@ -35,6 +35,7 @@
             this.ChooseText = new System.Windows.Forms.Label();
             this.ActivityInjectRadioSelection = new System.Windows.Forms.RadioButton();
             this.ActivityInjectPanel = new System.Windows.Forms.Panel();
+            this.ActivityInjectStatusLabel = new System.Windows.Forms.Label();
             this.ActivityInjectPanelBackToMethodSelectionButton = new System.Windows.Forms.Button();
             this.CoupledTagsTextBox = new System.Windows.Forms.TextBox();
             this.SelectionFilteringCoupledTagsLabel = new System.Windows.Forms.Label();
@@ -80,6 +81,7 @@
             this.MetricLiftMetricModeCountRadioButton = new System.Windows.Forms.RadioButton();
             this.MetricLiftMetricModeLabel = new System.Windows.Forms.Label();
             this.StatInfoMetricLiftSubPanel = new System.Windows.Forms.Panel();
+            this.MetricLiftStatInfoRadioButtonSophisticated = new System.Windows.Forms.RadioButton();
             this.MetricLiftStatInfoRadioButtonQuick = new System.Windows.Forms.RadioButton();
             this.MetricLiftStatInfoMode = new System.Windows.Forms.Label();
             this.AptMediaIdTextBox = new System.Windows.Forms.TextBox();
@@ -89,8 +91,7 @@
             this.BaseMediaId1TextBox = new System.Windows.Forms.TextBox();
             this.BaseMediaId1Label = new System.Windows.Forms.Label();
             this.AdjustSettingsLabelMetricLiftPanel = new System.Windows.Forms.Label();
-            this.MetricLiftStatInfoRadioButtonSophisticated = new System.Windows.Forms.RadioButton();
-            this.ActivityInjectStatusLabel = new System.Windows.Forms.Label();
+            this.MetricLiftStatInfoRadioButtonFavourites = new System.Windows.Forms.RadioButton();
             this.MainPanel.SuspendLayout();
             this.ActivityInjectPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SelectionPerMediaNumericUpDown)).BeginInit();
@@ -180,6 +181,16 @@
             this.ActivityInjectPanel.Size = new System.Drawing.Size(512, 374);
             this.ActivityInjectPanel.TabIndex = 3;
             this.ActivityInjectPanel.Visible = false;
+            // 
+            // ActivityInjectStatusLabel
+            // 
+            this.ActivityInjectStatusLabel.AutoSize = true;
+            this.ActivityInjectStatusLabel.Location = new System.Drawing.Point(155, 353);
+            this.ActivityInjectStatusLabel.Name = "ActivityInjectStatusLabel";
+            this.ActivityInjectStatusLabel.Size = new System.Drawing.Size(75, 13);
+            this.ActivityInjectStatusLabel.TabIndex = 17;
+            this.ActivityInjectStatusLabel.Text = "Status Update";
+            this.ActivityInjectStatusLabel.Visible = false;
             // 
             // ActivityInjectPanelBackToMethodSelectionButton
             // 
@@ -568,7 +579,7 @@
             this.MetricLiftBackToMethodSelectionButton.Name = "MetricLiftBackToMethodSelectionButton";
             this.MetricLiftBackToMethodSelectionButton.Size = new System.Drawing.Size(172, 25);
             this.MetricLiftBackToMethodSelectionButton.TabIndex = 11;
-            this.MetricLiftBackToMethodSelectionButton.Text = "Back To Method Selection";
+            this.MetricLiftBackToMethodSelectionButton.Text = "Back to Method Selection";
             this.MetricLiftBackToMethodSelectionButton.UseVisualStyleBackColor = true;
             this.MetricLiftBackToMethodSelectionButton.Click += new System.EventHandler(this.MetricLiftBackToMethodSelectionButton_Click);
             // 
@@ -657,6 +668,7 @@
             // 
             // StatInfoMetricLiftSubPanel
             // 
+            this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonFavourites);
             this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonSophisticated);
             this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonQuick);
             this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoMode);
@@ -664,6 +676,16 @@
             this.StatInfoMetricLiftSubPanel.Name = "StatInfoMetricLiftSubPanel";
             this.StatInfoMetricLiftSubPanel.Size = new System.Drawing.Size(502, 42);
             this.StatInfoMetricLiftSubPanel.TabIndex = 8;
+            // 
+            // MetricLiftStatInfoRadioButtonSophisticated
+            // 
+            this.MetricLiftStatInfoRadioButtonSophisticated.AutoSize = true;
+            this.MetricLiftStatInfoRadioButtonSophisticated.Location = new System.Drawing.Point(205, 20);
+            this.MetricLiftStatInfoRadioButtonSophisticated.Name = "MetricLiftStatInfoRadioButtonSophisticated";
+            this.MetricLiftStatInfoRadioButtonSophisticated.Size = new System.Drawing.Size(89, 17);
+            this.MetricLiftStatInfoRadioButtonSophisticated.TabIndex = 2;
+            this.MetricLiftStatInfoRadioButtonSophisticated.Text = "Sophisticated";
+            this.MetricLiftStatInfoRadioButtonSophisticated.UseVisualStyleBackColor = true;
             // 
             // MetricLiftStatInfoRadioButtonQuick
             // 
@@ -746,26 +768,15 @@
             this.AdjustSettingsLabelMetricLiftPanel.TabIndex = 0;
             this.AdjustSettingsLabelMetricLiftPanel.Text = "Adjust Settings: MetricLift";
             // 
-            // MetricLiftStatInfoRadioButtonSophisticated
+            // MetricLiftStatInfoRadioButtonFavourites
             // 
-            this.MetricLiftStatInfoRadioButtonSophisticated.AutoSize = true;
-            this.MetricLiftStatInfoRadioButtonSophisticated.Location = new System.Drawing.Point(205, 20);
-            this.MetricLiftStatInfoRadioButtonSophisticated.Name = "MetricLiftStatInfoRadioButtonSophisticated";
-            this.MetricLiftStatInfoRadioButtonSophisticated.Size = new System.Drawing.Size(89, 17);
-            this.MetricLiftStatInfoRadioButtonSophisticated.TabIndex = 2;
-            this.MetricLiftStatInfoRadioButtonSophisticated.TabStop = true;
-            this.MetricLiftStatInfoRadioButtonSophisticated.Text = "Sophisticated";
-            this.MetricLiftStatInfoRadioButtonSophisticated.UseVisualStyleBackColor = true;
-            // 
-            // ActivityInjectStatusLabel
-            // 
-            this.ActivityInjectStatusLabel.AutoSize = true;
-            this.ActivityInjectStatusLabel.Location = new System.Drawing.Point(155, 353);
-            this.ActivityInjectStatusLabel.Name = "ActivityInjectStatusLabel";
-            this.ActivityInjectStatusLabel.Size = new System.Drawing.Size(75, 13);
-            this.ActivityInjectStatusLabel.TabIndex = 17;
-            this.ActivityInjectStatusLabel.Text = "Status Update";
-            this.ActivityInjectStatusLabel.Visible = false;
+            this.MetricLiftStatInfoRadioButtonFavourites.AutoSize = true;
+            this.MetricLiftStatInfoRadioButtonFavourites.Location = new System.Drawing.Point(328, 20);
+            this.MetricLiftStatInfoRadioButtonFavourites.Name = "MetricLiftStatInfoRadioButtonFavourites";
+            this.MetricLiftStatInfoRadioButtonFavourites.Size = new System.Drawing.Size(74, 17);
+            this.MetricLiftStatInfoRadioButtonFavourites.TabIndex = 3;
+            this.MetricLiftStatInfoRadioButtonFavourites.Text = "Favourites";
+            this.MetricLiftStatInfoRadioButtonFavourites.UseVisualStyleBackColor = true;
             // 
             // ReBoogiepopTMainForm
             // 
@@ -863,6 +874,7 @@
         private System.Windows.Forms.Button MetricLiftBackToMethodSelectionButton;
         private System.Windows.Forms.RadioButton MetricLiftStatInfoRadioButtonSophisticated;
         private System.Windows.Forms.Label ActivityInjectStatusLabel;
+        private System.Windows.Forms.RadioButton MetricLiftStatInfoRadioButtonFavourites;
     }
 }
 
