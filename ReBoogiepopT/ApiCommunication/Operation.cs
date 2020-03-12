@@ -142,6 +142,46 @@ namespace ReBoogiepopT.ApiCommunication
             }
         }
 
+        static async public Task<Media> MediaById(int id)
+        {
+            Id variables = new Id(id);
+            Service service = new Service(mediaById, variables);
+            string serializedService = JsonConvert.SerializeObject(service);
+            StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
+
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
+            return responseObject.Data.Media;
+        }
+
+        /// <summary>
+        /// Fetches all the genres known to the anilist system.
+        /// </summary>
+        /// <returns>List of string which contains the genres.</returns>
+        static async public Task<List<string>> GenreCollection()
+        {
+            Service service = new Service(genreCollection);
+            string serializedService = JsonConvert.SerializeObject(service);
+            StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
+
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
+            return responseObject.Data.GenreCollection;
+        }
+
+        static async public Task<List<MediaTag>> TagCollection()
+        {
+            Service service = new Service(tagCollection);
+            string serializedService = JsonConvert.SerializeObject(service);
+            StringContent requestBody = new StringContent(serializedService, Encoding.UTF8, "application/json");
+            StringContent requestBodyForRetry = new StringContent(serializedService, Encoding.UTF8, "application/json");
+
+            TopLevel responseObject = await SafeRequestAndDeserializeResponse(requestBody, requestBodyForRetry);
+
+            return responseObject.Data.MediaTagCollection;
+        }
 
         /// <summary>
         /// Fetches the list of all the non plan to watch media on a user's list tagged with their status.

@@ -29,11 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReBoogiepopTMainForm));
+            this.MainPanel = new System.Windows.Forms.Panel();
+            this.MetricLiftPlusActivityInjectRadioSelection = new System.Windows.Forms.RadioButton();
+            this.MethodChoiceNextButton = new System.Windows.Forms.Button();
             this.ChooseText = new System.Windows.Forms.Label();
             this.ActivityInjectRadioSelection = new System.Windows.Forms.RadioButton();
-            this.MethodChoiceNextButton = new System.Windows.Forms.Button();
-            this.MainPanel = new System.Windows.Forms.Panel();
             this.ActivityInjectPanel = new System.Windows.Forms.Panel();
+            this.ActivityInjectStatusLabel = new System.Windows.Forms.Label();
+            this.ActivityInjectPanelBackToMethodSelectionButton = new System.Windows.Forms.Button();
             this.CoupledTagsTextBox = new System.Windows.Forms.TextBox();
             this.SelectionFilteringCoupledTagsLabel = new System.Windows.Forms.Label();
             this.SelectionPerMediaNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -49,6 +52,10 @@
             this.ActivityInjectRunButton = new System.Windows.Forms.Button();
             this.ActivityInjectTopText = new System.Windows.Forms.Label();
             this.ResultsPanel = new System.Windows.Forms.Panel();
+            this.NoResultsLabel = new System.Windows.Forms.Label();
+            this.ToMainPanelButton = new System.Windows.Forms.Button();
+            this.LocalPopularitySortedAmountOutOf = new System.Windows.Forms.Label();
+            this.MeanScoreSortedAmountOutOf = new System.Windows.Forms.Label();
             this.LocalPopularitySortedNextButton = new System.Windows.Forms.Button();
             this.LocalPopularitySortedPreviousButton = new System.Windows.Forms.Button();
             this.MeanScoreSortedNextButton = new System.Windows.Forms.Button();
@@ -62,18 +69,72 @@
             this.MeanScoreLabel = new System.Windows.Forms.Label();
             this.ResultsPanelTopLabel = new System.Windows.Forms.Label();
             this.MeanScorePictureBox = new System.Windows.Forms.PictureBox();
-            this.MeanScoreSortedAmountOutOf = new System.Windows.Forms.Label();
-            this.LocalPopularitySortedAmountOutOf = new System.Windows.Forms.Label();
-            this.ToMainPanelButton = new System.Windows.Forms.Button();
-            this.ActivityInjectPanelBackToMethodSelectionButton = new System.Windows.Forms.Button();
-            this.NoResultsLabel = new System.Windows.Forms.Label();
+            this.MetricLiftPanel = new System.Windows.Forms.Panel();
+            this.NextButtonMetricLift = new System.Windows.Forms.Button();
+            this.MetricLiftBackToMethodSelectionButton = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.MetricLiftModeConnectionRadioButton = new System.Windows.Forms.RadioButton();
+            this.MetricLiftModeArrowRadioButton = new System.Windows.Forms.RadioButton();
+            this.MetricLiftModeLabel = new System.Windows.Forms.Label();
+            this.MetricLiftMetricModePanel = new System.Windows.Forms.Panel();
+            this.MetricLiftMetricModeMinutesWatchedRadioButton = new System.Windows.Forms.RadioButton();
+            this.MetricLiftMetricModeCountRadioButton = new System.Windows.Forms.RadioButton();
+            this.MetricLiftMetricModeLabel = new System.Windows.Forms.Label();
+            this.StatInfoMetricLiftSubPanel = new System.Windows.Forms.Panel();
+            this.MetricLiftStatInfoRadioButtonSophisticated = new System.Windows.Forms.RadioButton();
+            this.MetricLiftStatInfoRadioButtonQuick = new System.Windows.Forms.RadioButton();
+            this.MetricLiftStatInfoMode = new System.Windows.Forms.Label();
+            this.AptMediaIdTextBox = new System.Windows.Forms.TextBox();
+            this.AptMediaIdLabel = new System.Windows.Forms.Label();
+            this.BaseMediaId2TextBox = new System.Windows.Forms.TextBox();
+            this.BaseMediaId2Label = new System.Windows.Forms.Label();
+            this.BaseMediaId1TextBox = new System.Windows.Forms.TextBox();
+            this.BaseMediaId1Label = new System.Windows.Forms.Label();
+            this.AdjustSettingsLabelMetricLiftPanel = new System.Windows.Forms.Label();
+            this.MetricLiftStatInfoRadioButtonFavourites = new System.Windows.Forms.RadioButton();
             this.MainPanel.SuspendLayout();
             this.ActivityInjectPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SelectionPerMediaNumericUpDown)).BeginInit();
             this.ResultsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LocalPopularityPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MeanScorePictureBox)).BeginInit();
+            this.MetricLiftPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.MetricLiftMetricModePanel.SuspendLayout();
+            this.StatInfoMetricLiftSubPanel.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            this.MainPanel.Controls.Add(this.MetricLiftPlusActivityInjectRadioSelection);
+            this.MainPanel.Controls.Add(this.MethodChoiceNextButton);
+            this.MainPanel.Controls.Add(this.ChooseText);
+            this.MainPanel.Controls.Add(this.ActivityInjectRadioSelection);
+            this.MainPanel.Location = new System.Drawing.Point(12, 12);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(512, 374);
+            this.MainPanel.TabIndex = 3;
+            // 
+            // MetricLiftPlusActivityInjectRadioSelection
+            // 
+            this.MetricLiftPlusActivityInjectRadioSelection.AutoSize = true;
+            this.MetricLiftPlusActivityInjectRadioSelection.Location = new System.Drawing.Point(39, 101);
+            this.MetricLiftPlusActivityInjectRadioSelection.Name = "MetricLiftPlusActivityInjectRadioSelection";
+            this.MetricLiftPlusActivityInjectRadioSelection.Size = new System.Drawing.Size(143, 17);
+            this.MetricLiftPlusActivityInjectRadioSelection.TabIndex = 3;
+            this.MetricLiftPlusActivityInjectRadioSelection.TabStop = true;
+            this.MetricLiftPlusActivityInjectRadioSelection.Text = "MetricLift + Activity Inject";
+            this.MetricLiftPlusActivityInjectRadioSelection.UseVisualStyleBackColor = true;
+            // 
+            // MethodChoiceNextButton
+            // 
+            this.MethodChoiceNextButton.Location = new System.Drawing.Point(434, 348);
+            this.MethodChoiceNextButton.Name = "MethodChoiceNextButton";
+            this.MethodChoiceNextButton.Size = new System.Drawing.Size(75, 23);
+            this.MethodChoiceNextButton.TabIndex = 2;
+            this.MethodChoiceNextButton.Text = "Next";
+            this.MethodChoiceNextButton.UseVisualStyleBackColor = true;
+            this.MethodChoiceNextButton.Click += new System.EventHandler(this.MethodChoiceNextButton_Click);
             // 
             // ChooseText
             // 
@@ -96,28 +157,9 @@
             this.ActivityInjectRadioSelection.Text = "Activity Inject";
             this.ActivityInjectRadioSelection.UseVisualStyleBackColor = true;
             // 
-            // MethodChoiceNextButton
-            // 
-            this.MethodChoiceNextButton.Location = new System.Drawing.Point(434, 348);
-            this.MethodChoiceNextButton.Name = "MethodChoiceNextButton";
-            this.MethodChoiceNextButton.Size = new System.Drawing.Size(75, 23);
-            this.MethodChoiceNextButton.TabIndex = 2;
-            this.MethodChoiceNextButton.Text = "Next";
-            this.MethodChoiceNextButton.UseVisualStyleBackColor = true;
-            this.MethodChoiceNextButton.Click += new System.EventHandler(this.MethodChoiceNextButton_Click);
-            // 
-            // MainPanel
-            // 
-            this.MainPanel.Controls.Add(this.MethodChoiceNextButton);
-            this.MainPanel.Controls.Add(this.ChooseText);
-            this.MainPanel.Controls.Add(this.ActivityInjectRadioSelection);
-            this.MainPanel.Location = new System.Drawing.Point(12, 12);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(512, 374);
-            this.MainPanel.TabIndex = 3;
-            // 
             // ActivityInjectPanel
             // 
+            this.ActivityInjectPanel.Controls.Add(this.ActivityInjectStatusLabel);
             this.ActivityInjectPanel.Controls.Add(this.ActivityInjectPanelBackToMethodSelectionButton);
             this.ActivityInjectPanel.Controls.Add(this.CoupledTagsTextBox);
             this.ActivityInjectPanel.Controls.Add(this.SelectionFilteringCoupledTagsLabel);
@@ -139,6 +181,26 @@
             this.ActivityInjectPanel.Size = new System.Drawing.Size(512, 374);
             this.ActivityInjectPanel.TabIndex = 3;
             this.ActivityInjectPanel.Visible = false;
+            // 
+            // ActivityInjectStatusLabel
+            // 
+            this.ActivityInjectStatusLabel.AutoSize = true;
+            this.ActivityInjectStatusLabel.Location = new System.Drawing.Point(155, 353);
+            this.ActivityInjectStatusLabel.Name = "ActivityInjectStatusLabel";
+            this.ActivityInjectStatusLabel.Size = new System.Drawing.Size(75, 13);
+            this.ActivityInjectStatusLabel.TabIndex = 17;
+            this.ActivityInjectStatusLabel.Text = "Status Update";
+            this.ActivityInjectStatusLabel.Visible = false;
+            // 
+            // ActivityInjectPanelBackToMethodSelectionButton
+            // 
+            this.ActivityInjectPanelBackToMethodSelectionButton.Location = new System.Drawing.Point(3, 348);
+            this.ActivityInjectPanelBackToMethodSelectionButton.Name = "ActivityInjectPanelBackToMethodSelectionButton";
+            this.ActivityInjectPanelBackToMethodSelectionButton.Size = new System.Drawing.Size(142, 23);
+            this.ActivityInjectPanelBackToMethodSelectionButton.TabIndex = 16;
+            this.ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
+            this.ActivityInjectPanelBackToMethodSelectionButton.UseVisualStyleBackColor = true;
+            this.ActivityInjectPanelBackToMethodSelectionButton.Click += new System.EventHandler(this.ActivityInjectPanelBackToMethodSelectionButton_Click);
             // 
             // CoupledTagsTextBox
             // 
@@ -279,9 +341,9 @@
             this.ActivityInjectTopText.AutoSize = true;
             this.ActivityInjectTopText.Location = new System.Drawing.Point(3, 24);
             this.ActivityInjectTopText.Name = "ActivityInjectTopText";
-            this.ActivityInjectTopText.Size = new System.Drawing.Size(77, 13);
+            this.ActivityInjectTopText.Size = new System.Drawing.Size(149, 13);
             this.ActivityInjectTopText.TabIndex = 0;
-            this.ActivityInjectTopText.Text = "Adjust Settings";
+            this.ActivityInjectTopText.Text = "Adjust Settings: Activity Inject ";
             // 
             // ResultsPanel
             // 
@@ -308,6 +370,45 @@
             this.ResultsPanel.Size = new System.Drawing.Size(512, 374);
             this.ResultsPanel.TabIndex = 4;
             this.ResultsPanel.Visible = false;
+            // 
+            // NoResultsLabel
+            // 
+            this.NoResultsLabel.AutoSize = true;
+            this.NoResultsLabel.Enabled = false;
+            this.NoResultsLabel.Location = new System.Drawing.Point(52, 50);
+            this.NoResultsLabel.Name = "NoResultsLabel";
+            this.NoResultsLabel.Size = new System.Drawing.Size(269, 13);
+            this.NoResultsLabel.TabIndex = 16;
+            this.NoResultsLabel.Text = "No results for the settings provided, try a different query.";
+            this.NoResultsLabel.Visible = false;
+            // 
+            // ToMainPanelButton
+            // 
+            this.ToMainPanelButton.Location = new System.Drawing.Point(375, 19);
+            this.ToMainPanelButton.Name = "ToMainPanelButton";
+            this.ToMainPanelButton.Size = new System.Drawing.Size(134, 23);
+            this.ToMainPanelButton.TabIndex = 15;
+            this.ToMainPanelButton.Text = "Quit to Method Selection";
+            this.ToMainPanelButton.UseVisualStyleBackColor = true;
+            this.ToMainPanelButton.Click += new System.EventHandler(this.ToMainPanelButton_Click);
+            // 
+            // LocalPopularitySortedAmountOutOf
+            // 
+            this.LocalPopularitySortedAmountOutOf.AutoSize = true;
+            this.LocalPopularitySortedAmountOutOf.Location = new System.Drawing.Point(303, 102);
+            this.LocalPopularitySortedAmountOutOf.Name = "LocalPopularitySortedAmountOutOf";
+            this.LocalPopularitySortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
+            this.LocalPopularitySortedAmountOutOf.TabIndex = 14;
+            this.LocalPopularitySortedAmountOutOf.Text = "A/AO";
+            // 
+            // MeanScoreSortedAmountOutOf
+            // 
+            this.MeanScoreSortedAmountOutOf.AutoSize = true;
+            this.MeanScoreSortedAmountOutOf.Location = new System.Drawing.Point(66, 102);
+            this.MeanScoreSortedAmountOutOf.Name = "MeanScoreSortedAmountOutOf";
+            this.MeanScoreSortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
+            this.MeanScoreSortedAmountOutOf.TabIndex = 13;
+            this.MeanScoreSortedAmountOutOf.Text = "A/AO";
             // 
             // LocalPopularitySortedNextButton
             // 
@@ -440,60 +541,249 @@
             this.MeanScorePictureBox.TabIndex = 0;
             this.MeanScorePictureBox.TabStop = false;
             // 
-            // MeanScoreSortedAmountOutOf
+            // MetricLiftPanel
             // 
-            this.MeanScoreSortedAmountOutOf.AutoSize = true;
-            this.MeanScoreSortedAmountOutOf.Location = new System.Drawing.Point(66, 102);
-            this.MeanScoreSortedAmountOutOf.Name = "MeanScoreSortedAmountOutOf";
-            this.MeanScoreSortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
-            this.MeanScoreSortedAmountOutOf.TabIndex = 13;
-            this.MeanScoreSortedAmountOutOf.Text = "A/AO";
+            this.MetricLiftPanel.Controls.Add(this.NextButtonMetricLift);
+            this.MetricLiftPanel.Controls.Add(this.MetricLiftBackToMethodSelectionButton);
+            this.MetricLiftPanel.Controls.Add(this.panel1);
+            this.MetricLiftPanel.Controls.Add(this.MetricLiftMetricModePanel);
+            this.MetricLiftPanel.Controls.Add(this.StatInfoMetricLiftSubPanel);
+            this.MetricLiftPanel.Controls.Add(this.AptMediaIdTextBox);
+            this.MetricLiftPanel.Controls.Add(this.AptMediaIdLabel);
+            this.MetricLiftPanel.Controls.Add(this.BaseMediaId2TextBox);
+            this.MetricLiftPanel.Controls.Add(this.BaseMediaId2Label);
+            this.MetricLiftPanel.Controls.Add(this.BaseMediaId1TextBox);
+            this.MetricLiftPanel.Controls.Add(this.BaseMediaId1Label);
+            this.MetricLiftPanel.Controls.Add(this.AdjustSettingsLabelMetricLiftPanel);
+            this.MetricLiftPanel.Enabled = false;
+            this.MetricLiftPanel.Location = new System.Drawing.Point(12, 12);
+            this.MetricLiftPanel.Name = "MetricLiftPanel";
+            this.MetricLiftPanel.Size = new System.Drawing.Size(512, 374);
+            this.MetricLiftPanel.TabIndex = 5;
+            this.MetricLiftPanel.Visible = false;
             // 
-            // LocalPopularitySortedAmountOutOf
+            // NextButtonMetricLift
             // 
-            this.LocalPopularitySortedAmountOutOf.AutoSize = true;
-            this.LocalPopularitySortedAmountOutOf.Location = new System.Drawing.Point(303, 102);
-            this.LocalPopularitySortedAmountOutOf.Name = "LocalPopularitySortedAmountOutOf";
-            this.LocalPopularitySortedAmountOutOf.Size = new System.Drawing.Size(34, 13);
-            this.LocalPopularitySortedAmountOutOf.TabIndex = 14;
-            this.LocalPopularitySortedAmountOutOf.Text = "A/AO";
+            this.NextButtonMetricLift.Enabled = false;
+            this.NextButtonMetricLift.Location = new System.Drawing.Point(439, 348);
+            this.NextButtonMetricLift.Name = "NextButtonMetricLift";
+            this.NextButtonMetricLift.Size = new System.Drawing.Size(67, 23);
+            this.NextButtonMetricLift.TabIndex = 12;
+            this.NextButtonMetricLift.Text = "Next";
+            this.NextButtonMetricLift.UseVisualStyleBackColor = true;
+            this.NextButtonMetricLift.Click += new System.EventHandler(this.NextButtonMetricLift_Click);
             // 
-            // ToMainPanelButton
+            // MetricLiftBackToMethodSelectionButton
             // 
-            this.ToMainPanelButton.Location = new System.Drawing.Point(375, 19);
-            this.ToMainPanelButton.Name = "ToMainPanelButton";
-            this.ToMainPanelButton.Size = new System.Drawing.Size(134, 23);
-            this.ToMainPanelButton.TabIndex = 15;
-            this.ToMainPanelButton.Text = "Quit to Method Selection";
-            this.ToMainPanelButton.UseVisualStyleBackColor = true;
-            this.ToMainPanelButton.Click += new System.EventHandler(this.ToMainPanelButton_Click);
+            this.MetricLiftBackToMethodSelectionButton.Location = new System.Drawing.Point(6, 346);
+            this.MetricLiftBackToMethodSelectionButton.Name = "MetricLiftBackToMethodSelectionButton";
+            this.MetricLiftBackToMethodSelectionButton.Size = new System.Drawing.Size(172, 25);
+            this.MetricLiftBackToMethodSelectionButton.TabIndex = 11;
+            this.MetricLiftBackToMethodSelectionButton.Text = "Back to Method Selection";
+            this.MetricLiftBackToMethodSelectionButton.UseVisualStyleBackColor = true;
+            this.MetricLiftBackToMethodSelectionButton.Click += new System.EventHandler(this.MetricLiftBackToMethodSelectionButton_Click);
             // 
-            // ActivityInjectPanelBackToMethodSelectionButton
+            // panel1
             // 
-            this.ActivityInjectPanelBackToMethodSelectionButton.Location = new System.Drawing.Point(3, 348);
-            this.ActivityInjectPanelBackToMethodSelectionButton.Name = "ActivityInjectPanelBackToMethodSelectionButton";
-            this.ActivityInjectPanelBackToMethodSelectionButton.Size = new System.Drawing.Size(142, 23);
-            this.ActivityInjectPanelBackToMethodSelectionButton.TabIndex = 16;
-            this.ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to Method Selection";
-            this.ActivityInjectPanelBackToMethodSelectionButton.UseVisualStyleBackColor = true;
-            this.ActivityInjectPanelBackToMethodSelectionButton.Click += new System.EventHandler(this.ActivityInjectPanelBackToMethodSelectionButton_Click);
+            this.panel1.Controls.Add(this.MetricLiftModeConnectionRadioButton);
+            this.panel1.Controls.Add(this.MetricLiftModeArrowRadioButton);
+            this.panel1.Controls.Add(this.MetricLiftModeLabel);
+            this.panel1.Location = new System.Drawing.Point(6, 249);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(500, 25);
+            this.panel1.TabIndex = 10;
             // 
-            // NoResultsLabel
+            // MetricLiftModeConnectionRadioButton
             // 
-            this.NoResultsLabel.AutoSize = true;
-            this.NoResultsLabel.Enabled = false;
-            this.NoResultsLabel.Location = new System.Drawing.Point(52, 50);
-            this.NoResultsLabel.Name = "NoResultsLabel";
-            this.NoResultsLabel.Size = new System.Drawing.Size(269, 13);
-            this.NoResultsLabel.TabIndex = 16;
-            this.NoResultsLabel.Text = "No results for the settings provided, try a different query.";
-            this.NoResultsLabel.Visible = false;
+            this.MetricLiftModeConnectionRadioButton.AutoSize = true;
+            this.MetricLiftModeConnectionRadioButton.Location = new System.Drawing.Point(205, 5);
+            this.MetricLiftModeConnectionRadioButton.Name = "MetricLiftModeConnectionRadioButton";
+            this.MetricLiftModeConnectionRadioButton.Size = new System.Drawing.Size(79, 17);
+            this.MetricLiftModeConnectionRadioButton.TabIndex = 2;
+            this.MetricLiftModeConnectionRadioButton.Text = "Connection";
+            this.MetricLiftModeConnectionRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftModeArrowRadioButton
+            // 
+            this.MetricLiftModeArrowRadioButton.AutoSize = true;
+            this.MetricLiftModeArrowRadioButton.Checked = true;
+            this.MetricLiftModeArrowRadioButton.Location = new System.Drawing.Point(123, 5);
+            this.MetricLiftModeArrowRadioButton.Name = "MetricLiftModeArrowRadioButton";
+            this.MetricLiftModeArrowRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.MetricLiftModeArrowRadioButton.TabIndex = 1;
+            this.MetricLiftModeArrowRadioButton.TabStop = true;
+            this.MetricLiftModeArrowRadioButton.Text = "Arrow";
+            this.MetricLiftModeArrowRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftModeLabel
+            // 
+            this.MetricLiftModeLabel.AutoSize = true;
+            this.MetricLiftModeLabel.Location = new System.Drawing.Point(30, 7);
+            this.MetricLiftModeLabel.Name = "MetricLiftModeLabel";
+            this.MetricLiftModeLabel.Size = new System.Drawing.Size(80, 13);
+            this.MetricLiftModeLabel.TabIndex = 0;
+            this.MetricLiftModeLabel.Text = "MetricLiftMode:";
+            // 
+            // MetricLiftMetricModePanel
+            // 
+            this.MetricLiftMetricModePanel.Controls.Add(this.MetricLiftMetricModeMinutesWatchedRadioButton);
+            this.MetricLiftMetricModePanel.Controls.Add(this.MetricLiftMetricModeCountRadioButton);
+            this.MetricLiftMetricModePanel.Controls.Add(this.MetricLiftMetricModeLabel);
+            this.MetricLiftMetricModePanel.Location = new System.Drawing.Point(6, 211);
+            this.MetricLiftMetricModePanel.Name = "MetricLiftMetricModePanel";
+            this.MetricLiftMetricModePanel.Size = new System.Drawing.Size(501, 28);
+            this.MetricLiftMetricModePanel.TabIndex = 9;
+            // 
+            // MetricLiftMetricModeMinutesWatchedRadioButton
+            // 
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.AutoSize = true;
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.Location = new System.Drawing.Point(205, 4);
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.Name = "MetricLiftMetricModeMinutesWatchedRadioButton";
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.Size = new System.Drawing.Size(109, 17);
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.TabIndex = 2;
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.TabStop = true;
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.Text = "Minutes Watched";
+            this.MetricLiftMetricModeMinutesWatchedRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftMetricModeCountRadioButton
+            // 
+            this.MetricLiftMetricModeCountRadioButton.AutoSize = true;
+            this.MetricLiftMetricModeCountRadioButton.Checked = true;
+            this.MetricLiftMetricModeCountRadioButton.Location = new System.Drawing.Point(123, 4);
+            this.MetricLiftMetricModeCountRadioButton.Name = "MetricLiftMetricModeCountRadioButton";
+            this.MetricLiftMetricModeCountRadioButton.Size = new System.Drawing.Size(53, 17);
+            this.MetricLiftMetricModeCountRadioButton.TabIndex = 1;
+            this.MetricLiftMetricModeCountRadioButton.TabStop = true;
+            this.MetricLiftMetricModeCountRadioButton.Text = "Count";
+            this.MetricLiftMetricModeCountRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftMetricModeLabel
+            // 
+            this.MetricLiftMetricModeLabel.AutoSize = true;
+            this.MetricLiftMetricModeLabel.Location = new System.Drawing.Point(30, 6);
+            this.MetricLiftMetricModeLabel.Name = "MetricLiftMetricModeLabel";
+            this.MetricLiftMetricModeLabel.Size = new System.Drawing.Size(69, 13);
+            this.MetricLiftMetricModeLabel.TabIndex = 0;
+            this.MetricLiftMetricModeLabel.Text = "Metric Mode:";
+            // 
+            // StatInfoMetricLiftSubPanel
+            // 
+            this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonFavourites);
+            this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonSophisticated);
+            this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoRadioButtonQuick);
+            this.StatInfoMetricLiftSubPanel.Controls.Add(this.MetricLiftStatInfoMode);
+            this.StatInfoMetricLiftSubPanel.Location = new System.Drawing.Point(6, 157);
+            this.StatInfoMetricLiftSubPanel.Name = "StatInfoMetricLiftSubPanel";
+            this.StatInfoMetricLiftSubPanel.Size = new System.Drawing.Size(502, 42);
+            this.StatInfoMetricLiftSubPanel.TabIndex = 8;
+            // 
+            // MetricLiftStatInfoRadioButtonSophisticated
+            // 
+            this.MetricLiftStatInfoRadioButtonSophisticated.AutoSize = true;
+            this.MetricLiftStatInfoRadioButtonSophisticated.Location = new System.Drawing.Point(205, 20);
+            this.MetricLiftStatInfoRadioButtonSophisticated.Name = "MetricLiftStatInfoRadioButtonSophisticated";
+            this.MetricLiftStatInfoRadioButtonSophisticated.Size = new System.Drawing.Size(89, 17);
+            this.MetricLiftStatInfoRadioButtonSophisticated.TabIndex = 2;
+            this.MetricLiftStatInfoRadioButtonSophisticated.Text = "Sophisticated";
+            this.MetricLiftStatInfoRadioButtonSophisticated.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftStatInfoRadioButtonQuick
+            // 
+            this.MetricLiftStatInfoRadioButtonQuick.AutoSize = true;
+            this.MetricLiftStatInfoRadioButtonQuick.Checked = true;
+            this.MetricLiftStatInfoRadioButtonQuick.Location = new System.Drawing.Point(123, 20);
+            this.MetricLiftStatInfoRadioButtonQuick.Name = "MetricLiftStatInfoRadioButtonQuick";
+            this.MetricLiftStatInfoRadioButtonQuick.Size = new System.Drawing.Size(53, 17);
+            this.MetricLiftStatInfoRadioButtonQuick.TabIndex = 1;
+            this.MetricLiftStatInfoRadioButtonQuick.TabStop = true;
+            this.MetricLiftStatInfoRadioButtonQuick.Text = "Quick";
+            this.MetricLiftStatInfoRadioButtonQuick.UseVisualStyleBackColor = true;
+            // 
+            // MetricLiftStatInfoMode
+            // 
+            this.MetricLiftStatInfoMode.AutoSize = true;
+            this.MetricLiftStatInfoMode.Location = new System.Drawing.Point(30, 22);
+            this.MetricLiftStatInfoMode.Name = "MetricLiftStatInfoMode";
+            this.MetricLiftStatInfoMode.Size = new System.Drawing.Size(80, 13);
+            this.MetricLiftStatInfoMode.TabIndex = 0;
+            this.MetricLiftStatInfoMode.Text = "Stat Info Mode:";
+            // 
+            // AptMediaIdTextBox
+            // 
+            this.AptMediaIdTextBox.Location = new System.Drawing.Point(129, 98);
+            this.AptMediaIdTextBox.Name = "AptMediaIdTextBox";
+            this.AptMediaIdTextBox.Size = new System.Drawing.Size(100, 20);
+            this.AptMediaIdTextBox.TabIndex = 6;
+            this.AptMediaIdTextBox.TextChanged += new System.EventHandler(this.AptMediaIdTextBox_TextChanged);
+            // 
+            // AptMediaIdLabel
+            // 
+            this.AptMediaIdLabel.AutoSize = true;
+            this.AptMediaIdLabel.Location = new System.Drawing.Point(36, 102);
+            this.AptMediaIdLabel.Name = "AptMediaIdLabel";
+            this.AptMediaIdLabel.Size = new System.Drawing.Size(70, 13);
+            this.AptMediaIdLabel.TabIndex = 5;
+            this.AptMediaIdLabel.Text = "Apt Media Id:";
+            // 
+            // BaseMediaId2TextBox
+            // 
+            this.BaseMediaId2TextBox.Location = new System.Drawing.Point(350, 47);
+            this.BaseMediaId2TextBox.Name = "BaseMediaId2TextBox";
+            this.BaseMediaId2TextBox.Size = new System.Drawing.Size(100, 20);
+            this.BaseMediaId2TextBox.TabIndex = 4;
+            this.BaseMediaId2TextBox.TextChanged += new System.EventHandler(this.BaseMediaId2TextBox_TextChanged);
+            // 
+            // BaseMediaId2Label
+            // 
+            this.BaseMediaId2Label.AutoSize = true;
+            this.BaseMediaId2Label.Location = new System.Drawing.Point(257, 50);
+            this.BaseMediaId2Label.Name = "BaseMediaId2Label";
+            this.BaseMediaId2Label.Size = new System.Drawing.Size(87, 13);
+            this.BaseMediaId2Label.TabIndex = 3;
+            this.BaseMediaId2Label.Text = "Base Media Id 2:";
+            // 
+            // BaseMediaId1TextBox
+            // 
+            this.BaseMediaId1TextBox.Location = new System.Drawing.Point(129, 47);
+            this.BaseMediaId1TextBox.Name = "BaseMediaId1TextBox";
+            this.BaseMediaId1TextBox.Size = new System.Drawing.Size(100, 20);
+            this.BaseMediaId1TextBox.TabIndex = 2;
+            this.BaseMediaId1TextBox.TextChanged += new System.EventHandler(this.BaseMediaId1TextBox_TextChanged);
+            // 
+            // BaseMediaId1Label
+            // 
+            this.BaseMediaId1Label.AutoSize = true;
+            this.BaseMediaId1Label.Location = new System.Drawing.Point(36, 50);
+            this.BaseMediaId1Label.Name = "BaseMediaId1Label";
+            this.BaseMediaId1Label.Size = new System.Drawing.Size(87, 13);
+            this.BaseMediaId1Label.TabIndex = 1;
+            this.BaseMediaId1Label.Text = "Base Media Id 1:";
+            // 
+            // AdjustSettingsLabelMetricLiftPanel
+            // 
+            this.AdjustSettingsLabelMetricLiftPanel.AutoSize = true;
+            this.AdjustSettingsLabelMetricLiftPanel.Location = new System.Drawing.Point(23, 24);
+            this.AdjustSettingsLabelMetricLiftPanel.Name = "AdjustSettingsLabelMetricLiftPanel";
+            this.AdjustSettingsLabelMetricLiftPanel.Size = new System.Drawing.Size(126, 13);
+            this.AdjustSettingsLabelMetricLiftPanel.TabIndex = 0;
+            this.AdjustSettingsLabelMetricLiftPanel.Text = "Adjust Settings: MetricLift";
+            // 
+            // MetricLiftStatInfoRadioButtonFavourites
+            // 
+            this.MetricLiftStatInfoRadioButtonFavourites.AutoSize = true;
+            this.MetricLiftStatInfoRadioButtonFavourites.Location = new System.Drawing.Point(328, 20);
+            this.MetricLiftStatInfoRadioButtonFavourites.Name = "MetricLiftStatInfoRadioButtonFavourites";
+            this.MetricLiftStatInfoRadioButtonFavourites.Size = new System.Drawing.Size(74, 17);
+            this.MetricLiftStatInfoRadioButtonFavourites.TabIndex = 3;
+            this.MetricLiftStatInfoRadioButtonFavourites.Text = "Favourites";
+            this.MetricLiftStatInfoRadioButtonFavourites.UseVisualStyleBackColor = true;
             // 
             // ReBoogiepopTMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 398);
+            this.Controls.Add(this.MetricLiftPanel);
             this.Controls.Add(this.ResultsPanel);
             this.Controls.Add(this.ActivityInjectPanel);
             this.Controls.Add(this.MainPanel);
@@ -509,14 +799,19 @@
             this.ResultsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LocalPopularityPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MeanScorePictureBox)).EndInit();
+            this.MetricLiftPanel.ResumeLayout(false);
+            this.MetricLiftPanel.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.MetricLiftMetricModePanel.ResumeLayout(false);
+            this.MetricLiftMetricModePanel.PerformLayout();
+            this.StatInfoMetricLiftSubPanel.ResumeLayout(false);
+            this.StatInfoMetricLiftSubPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Label ChooseText;
-        private System.Windows.Forms.RadioButton ActivityInjectRadioSelection;
-        private System.Windows.Forms.Button MethodChoiceNextButton;
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.Panel ActivityInjectPanel;
         private System.Windows.Forms.Label ActivityInjectTopText;
@@ -552,6 +847,34 @@
         private System.Windows.Forms.Button ToMainPanelButton;
         private System.Windows.Forms.Button ActivityInjectPanelBackToMethodSelectionButton;
         private System.Windows.Forms.Label NoResultsLabel;
+        private System.Windows.Forms.RadioButton MetricLiftPlusActivityInjectRadioSelection;
+        private System.Windows.Forms.Button MethodChoiceNextButton;
+        private System.Windows.Forms.Label ChooseText;
+        private System.Windows.Forms.RadioButton ActivityInjectRadioSelection;
+        private System.Windows.Forms.Panel MetricLiftPanel;
+        private System.Windows.Forms.Label AdjustSettingsLabelMetricLiftPanel;
+        private System.Windows.Forms.Label BaseMediaId1Label;
+        private System.Windows.Forms.TextBox AptMediaIdTextBox;
+        private System.Windows.Forms.Label AptMediaIdLabel;
+        private System.Windows.Forms.TextBox BaseMediaId2TextBox;
+        private System.Windows.Forms.Label BaseMediaId2Label;
+        private System.Windows.Forms.TextBox BaseMediaId1TextBox;
+        private System.Windows.Forms.Panel MetricLiftMetricModePanel;
+        private System.Windows.Forms.RadioButton MetricLiftMetricModeMinutesWatchedRadioButton;
+        private System.Windows.Forms.RadioButton MetricLiftMetricModeCountRadioButton;
+        private System.Windows.Forms.Label MetricLiftMetricModeLabel;
+        private System.Windows.Forms.Panel StatInfoMetricLiftSubPanel;
+        private System.Windows.Forms.RadioButton MetricLiftStatInfoRadioButtonQuick;
+        private System.Windows.Forms.Label MetricLiftStatInfoMode;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton MetricLiftModeConnectionRadioButton;
+        private System.Windows.Forms.RadioButton MetricLiftModeArrowRadioButton;
+        private System.Windows.Forms.Label MetricLiftModeLabel;
+        private System.Windows.Forms.Button NextButtonMetricLift;
+        private System.Windows.Forms.Button MetricLiftBackToMethodSelectionButton;
+        private System.Windows.Forms.RadioButton MetricLiftStatInfoRadioButtonSophisticated;
+        private System.Windows.Forms.Label ActivityInjectStatusLabel;
+        private System.Windows.Forms.RadioButton MetricLiftStatInfoRadioButtonFavourites;
     }
 }
 

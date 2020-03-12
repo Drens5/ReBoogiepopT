@@ -35,6 +35,12 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
 
         public Page Page { get; set; }
 
+        public Media Media { get; set; }
+
         public MediaListCollection MediaListCollection { get; set; }
+
+        public List<string> GenreCollection { get; set; }
+
+        public List<MediaTag> MediaTagCollection { get; set; }
     }
 }

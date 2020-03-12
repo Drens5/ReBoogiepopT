@@ -15,8 +15,10 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
     {
         private readonly MediaListStatus status;
         private readonly Media media;
-
+        private readonly int progress;
+        
         public MediaListStatus Status => status;
         public Media Media => media;
+        public int Progress => progress;
     }
 }

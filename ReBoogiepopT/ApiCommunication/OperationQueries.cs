@@ -65,6 +65,7 @@ namespace ReBoogiepopT.ApiCommunication
                 lists {
                   status
                   entries {
+                    progress
                     status
                     media {
                       id
@@ -75,6 +76,7 @@ namespace ReBoogiepopT.ApiCommunication
                       }
                       description
                       siteUrl
+                      duration
                       coverImage {
                         large
                         medium
@@ -135,6 +137,39 @@ namespace ReBoogiepopT.ApiCommunication
                       }
                     }
                   }
+                }
+              }
+            }
+        ";
+
+        private const string genreCollection = @"
+            query genreCollection {
+              GenreCollection
+            }
+        ";
+
+        private const string tagCollection = @"
+            query tagCollection {
+              MediaTagCollection {
+                id
+                name
+                category
+              }
+            }
+        ";
+
+        private const string mediaById = @"
+            query mediaById($id: Int!) {
+              Media(id: $id){
+                title {
+                  native
+                  english
+                  romaji
+                }
+                genres
+                tags {
+                  name
+                  category
                 }
               }
             }

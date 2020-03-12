@@ -17,6 +17,10 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         private readonly MediaTitle title;
         private readonly string description;
         private readonly string siteUrl;
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        private readonly int duration;
+
         private readonly MediaCoverImage coverImage;
         private readonly List<string> genres;
 
@@ -32,6 +36,7 @@ namespace ReBoogiepopT.ApiCommunication.AnilistDatatypes
         public MediaTitle Title => title;
         public string Description => description;
         public string SiteUrl => siteUrl;
+        public int Duration => duration;
         public MediaCoverImage CoverImage => coverImage;
         public List<string> Genres => genres;
         public int MeanScore => meanScore;
