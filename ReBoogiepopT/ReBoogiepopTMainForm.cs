@@ -70,7 +70,12 @@ namespace ReBoogiepopT
             foreach (string textMediaId in textMediaIds)
             {
                 if (int.TryParse(textMediaId, out int mediaId))
-                    mediaIds.Add(mediaId);
+                {
+                    if (mediaIds.Exists(i => i == mediaId))
+                        continue;
+                    else
+                        mediaIds.Add(mediaId);
+                }
             }
 
             // Parse activity status.
@@ -492,8 +497,22 @@ namespace ReBoogiepopT
             ActivityInjectPanel.Visible = true;
             ActivityInjectPanel.Enabled = true;
 
-            InjectMediaTextBox.Text = BaseMediaId1TextBox.Text.Trim() + ", " + BaseMediaId2TextBox.Text.Trim()
-                + ", " + AptMediaIdTextBox.Text.Trim();
+            // Default inject media when using metriclift.
+            int[] defaultInjectMedia = { baseMediaId1, baseMediaId2, aptMediaId };
+            List<int> defaultInjectMediaNub = new List<int>(3);
+            foreach (int id in defaultInjectMedia)
+            {
+                if (defaultInjectMediaNub.Exists(i => i == id))
+                    continue;
+                else
+                    defaultInjectMediaNub.Add(id);
+            }
+            for (int i = 0; i < defaultInjectMediaNub.Count; i++){
+                if (i == 0)
+                    InjectMediaTextBox.Text = defaultInjectMediaNub[0].ToString();
+                else
+                    InjectMediaTextBox.Text += ", " + defaultInjectMediaNub[i].ToString();
+            }
 
             ActivityInjectPanelBackToMethodSelectionButton.Text = "Back to MetricLift";
         }
